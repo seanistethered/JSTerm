@@ -1,0 +1,446 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AF05C7E12D0E03C800B3BC22 /* 2048.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7E02D0E039B00B3BC22 /* 2048.js */; };
+		AF05C7E22D0E03C800B3BC22 /* ps.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7DF2D0E038500B3BC22 /* ps.js */; };
+		AF05C7E32D0E03C800B3BC22 /* kill.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7DE2D0E036A00B3BC22 /* kill.js */; };
+		AF05C7E52D0E03C800B3BC22 /* clear.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7DA2D0E032000B3BC22 /* clear.js */; };
+		AF05C7E72D0E03C800B3BC22 /* ls.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7D82D0E02EB00B3BC22 /* ls.js */; };
+		AF05C7E82D0E03C800B3BC22 /* shell.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7D72D0E02DF00B3BC22 /* shell.js */; };
+		AF05C7EA2D0E117B00B3BC22 /* mkserial.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7E92D0E117400B3BC22 /* mkserial.js */; };
+		AF05C7F02D0E121500B3BC22 /* mkdir.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7EF2D0E121200B3BC22 /* mkdir.js */; };
+		AF05C7F22D0E300F00B3BC22 /* rmdir.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7F12D0E300A00B3BC22 /* rmdir.js */; };
+		AF05C7F42D0E39CF00B3BC22 /* env.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7F32D0E39C800B3BC22 /* env.js */; };
+		AF05C7F82D0E40EA00B3BC22 /* uname.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7F72D0E40E600B3BC22 /* uname.js */; };
+		AF05C7FA2D0E42AD00B3BC22 /* hostname.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7F92D0E42A900B3BC22 /* hostname.js */; };
+		AF18CEC12D0F223600F5A2E8 /* cat.js in Resources */ = {isa = PBXBuildFile; fileRef = AF18CEC02D0F223200F5A2E8 /* cat.js */; };
+		AF18CEC32D0F23A300F5A2E8 /* echo.js in Resources */ = {isa = PBXBuildFile; fileRef = AF18CEC22D0F239E00F5A2E8 /* echo.js */; };
+		AF18CECB2D0F2DB900F5A2E8 /* su.js in Resources */ = {isa = PBXBuildFile; fileRef = AF18CECA2D0F2DB400F5A2E8 /* su.js */; };
+		AF18CED32D0F3A5700F5A2E8 /* pamctl.js in Resources */ = {isa = PBXBuildFile; fileRef = AF18CED22D0F3A4D00F5A2E8 /* pamctl.js */; };
+		AF1C2C4C2D14115B00EE0820 /* whoami.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C4B2D14115700EE0820 /* whoami.js */; };
+		AF1C2C4E2D14122B00EE0820 /* id.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C4D2D14122600EE0820 /* id.js */; };
+		AF1C2C592D1437DB00EE0820 /* dserver.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C582D1437D400EE0820 /* dserver.js */; };
+		AF1C2C5B2D1437E400EE0820 /* dmsg.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C5A2D1437DE00EE0820 /* dmsg.js */; };
+		AF1C2C5D2D14632400EE0820 /* chown.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C5C2D14631F00EE0820 /* chown.js */; };
+		AF5012992D0E7B72009CA6BB /* serialctl.js in Resources */ = {isa = PBXBuildFile; fileRef = AF5012982D0E7B6B009CA6BB /* serialctl.js */; };
+		AFF5312C2D11B68D00C3E23C /* exploit.js in Resources */ = {isa = PBXBuildFile; fileRef = AFF5312B2D11B68800C3E23C /* exploit.js */; };
+		AFF531312D13441800C3E23C /* shutdown.js in Resources */ = {isa = PBXBuildFile; fileRef = AFF531302D13441200C3E23C /* shutdown.js */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AF05C7D72D0E02DF00B3BC22 /* shell.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = shell.js; sourceTree = "<group>"; };
+		AF05C7D82D0E02EB00B3BC22 /* ls.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ls.js; sourceTree = "<group>"; };
+		AF05C7DA2D0E032000B3BC22 /* clear.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = clear.js; sourceTree = "<group>"; };
+		AF05C7DE2D0E036A00B3BC22 /* kill.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = kill.js; sourceTree = "<group>"; };
+		AF05C7DF2D0E038500B3BC22 /* ps.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ps.js; sourceTree = "<group>"; };
+		AF05C7E02D0E039B00B3BC22 /* 2048.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = 2048.js; sourceTree = "<group>"; };
+		AF05C7E92D0E117400B3BC22 /* mkserial.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mkserial.js; sourceTree = "<group>"; };
+		AF05C7EF2D0E121200B3BC22 /* mkdir.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mkdir.js; sourceTree = "<group>"; };
+		AF05C7F12D0E300A00B3BC22 /* rmdir.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = rmdir.js; sourceTree = "<group>"; };
+		AF05C7F32D0E39C800B3BC22 /* env.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = env.js; sourceTree = "<group>"; };
+		AF05C7F72D0E40E600B3BC22 /* uname.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = uname.js; sourceTree = "<group>"; };
+		AF05C7F92D0E42A900B3BC22 /* hostname.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = hostname.js; sourceTree = "<group>"; };
+		AF18CEC02D0F223200F5A2E8 /* cat.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = cat.js; sourceTree = "<group>"; };
+		AF18CEC22D0F239E00F5A2E8 /* echo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = echo.js; sourceTree = "<group>"; };
+		AF18CECA2D0F2DB400F5A2E8 /* su.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = su.js; sourceTree = "<group>"; };
+		AF18CED22D0F3A4D00F5A2E8 /* pamctl.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = pamctl.js; sourceTree = "<group>"; };
+		AF1C2C4B2D14115700EE0820 /* whoami.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = whoami.js; sourceTree = "<group>"; };
+		AF1C2C4D2D14122600EE0820 /* id.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = id.js; sourceTree = "<group>"; };
+		AF1C2C582D1437D400EE0820 /* dserver.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = dserver.js; sourceTree = "<group>"; };
+		AF1C2C5A2D1437DE00EE0820 /* dmsg.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = dmsg.js; sourceTree = "<group>"; };
+		AF1C2C5C2D14631F00EE0820 /* chown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chown.js; sourceTree = "<group>"; };
+		AF5012982D0E7B6B009CA6BB /* serialctl.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = serialctl.js; sourceTree = "<group>"; };
+		AFF4BB922D0B33C40094B4AC /* JSTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFF5312B2D11B68800C3E23C /* exploit.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = exploit.js; sourceTree = "<group>"; };
+		AFF531302D13441200C3E23C /* shutdown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = shutdown.js; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		AFF4BB942D0B33C40094B4AC /* JSTerm */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = JSTerm;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFF4BB8F2D0B33C40094B4AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AF05C7D62D0E02D200B3BC22 /* JSOS */ = {
+			isa = PBXGroup;
+			children = (
+				AF1C2C5C2D14631F00EE0820 /* chown.js */,
+				AF1C2C5A2D1437DE00EE0820 /* dmsg.js */,
+				AF1C2C582D1437D400EE0820 /* dserver.js */,
+				AF1C2C4D2D14122600EE0820 /* id.js */,
+				AF1C2C4B2D14115700EE0820 /* whoami.js */,
+				AFF531302D13441200C3E23C /* shutdown.js */,
+				AFF5312B2D11B68800C3E23C /* exploit.js */,
+				AF18CED22D0F3A4D00F5A2E8 /* pamctl.js */,
+				AF18CECA2D0F2DB400F5A2E8 /* su.js */,
+				AF18CEC22D0F239E00F5A2E8 /* echo.js */,
+				AF18CEC02D0F223200F5A2E8 /* cat.js */,
+				AF5012982D0E7B6B009CA6BB /* serialctl.js */,
+				AF05C7F92D0E42A900B3BC22 /* hostname.js */,
+				AF05C7F72D0E40E600B3BC22 /* uname.js */,
+				AF05C7F32D0E39C800B3BC22 /* env.js */,
+				AF05C7F12D0E300A00B3BC22 /* rmdir.js */,
+				AF05C7EF2D0E121200B3BC22 /* mkdir.js */,
+				AF05C7E92D0E117400B3BC22 /* mkserial.js */,
+				AF05C7E02D0E039B00B3BC22 /* 2048.js */,
+				AF05C7DF2D0E038500B3BC22 /* ps.js */,
+				AF05C7DE2D0E036A00B3BC22 /* kill.js */,
+				AF05C7DA2D0E032000B3BC22 /* clear.js */,
+				AF05C7D82D0E02EB00B3BC22 /* ls.js */,
+				AF05C7D72D0E02DF00B3BC22 /* shell.js */,
+			);
+			path = JSOS;
+			sourceTree = "<group>";
+		};
+		AFF4BB892D0B33C40094B4AC = {
+			isa = PBXGroup;
+			children = (
+				AF05C7D62D0E02D200B3BC22 /* JSOS */,
+				AFF4BB942D0B33C40094B4AC /* JSTerm */,
+				AFF4BB932D0B33C40094B4AC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AFF4BB932D0B33C40094B4AC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFF4BB922D0B33C40094B4AC /* JSTerm.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFF4BB912D0B33C40094B4AC /* JSTerm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFF4BBB62D0B33C60094B4AC /* Build configuration list for PBXNativeTarget "JSTerm" */;
+			buildPhases = (
+				AFF4BB8E2D0B33C40094B4AC /* Sources */,
+				AFF4BB8F2D0B33C40094B4AC /* Frameworks */,
+				AFF4BB902D0B33C40094B4AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AFF4BB942D0B33C40094B4AC /* JSTerm */,
+			);
+			name = JSTerm;
+			packageProductDependencies = (
+			);
+			productName = JSTerm;
+			productReference = AFF4BB922D0B33C40094B4AC /* JSTerm.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFF4BB8A2D0B33C40094B4AC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					AFF4BB912D0B33C40094B4AC = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = AFF4BB8D2D0B33C40094B4AC /* Build configuration list for PBXProject "JSTerm" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AFF4BB892D0B33C40094B4AC;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = AFF4BB932D0B33C40094B4AC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFF4BB912D0B33C40094B4AC /* JSTerm */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFF4BB902D0B33C40094B4AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF18CEC32D0F23A300F5A2E8 /* echo.js in Resources */,
+				AF05C7E12D0E03C800B3BC22 /* 2048.js in Resources */,
+				AF1C2C4C2D14115B00EE0820 /* whoami.js in Resources */,
+				AF05C7E22D0E03C800B3BC22 /* ps.js in Resources */,
+				AF18CEC12D0F223600F5A2E8 /* cat.js in Resources */,
+				AF05C7E32D0E03C800B3BC22 /* kill.js in Resources */,
+				AF05C7FA2D0E42AD00B3BC22 /* hostname.js in Resources */,
+				AF05C7F42D0E39CF00B3BC22 /* env.js in Resources */,
+				AF05C7E52D0E03C800B3BC22 /* clear.js in Resources */,
+				AF18CED32D0F3A5700F5A2E8 /* pamctl.js in Resources */,
+				AF1C2C4E2D14122B00EE0820 /* id.js in Resources */,
+				AF05C7E72D0E03C800B3BC22 /* ls.js in Resources */,
+				AF1C2C592D1437DB00EE0820 /* dserver.js in Resources */,
+				AF5012992D0E7B72009CA6BB /* serialctl.js in Resources */,
+				AF05C7E82D0E03C800B3BC22 /* shell.js in Resources */,
+				AF05C7F82D0E40EA00B3BC22 /* uname.js in Resources */,
+				AF18CECB2D0F2DB900F5A2E8 /* su.js in Resources */,
+				AFF531312D13441800C3E23C /* shutdown.js in Resources */,
+				AF05C7EA2D0E117B00B3BC22 /* mkserial.js in Resources */,
+				AF1C2C5D2D14632400EE0820 /* chown.js in Resources */,
+				AF05C7F22D0E300F00B3BC22 /* rmdir.js in Resources */,
+				AF1C2C5B2D1437E400EE0820 /* dmsg.js in Resources */,
+				AFF5312C2D11B68D00C3E23C /* exploit.js in Resources */,
+				AF05C7F02D0E121500B3BC22 /* mkdir.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFF4BB8E2D0B33C40094B4AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AFF4BBB42D0B33C60094B4AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AFF4BBB52D0B33C60094B4AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AFF4BBB72D0B33C60094B4AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = L4A6CKH3TV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JSOS",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinac.JSTerm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AFF4BBB82D0B33C60094B4AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = L4A6CKH3TV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JSOS",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinac.JSTerm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFF4BB8D2D0B33C40094B4AC /* Build configuration list for PBXProject "JSTerm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFF4BBB42D0B33C60094B4AC /* Debug */,
+				AFF4BBB52D0B33C60094B4AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFF4BBB62D0B33C60094B4AC /* Build configuration list for PBXNativeTarget "JSTerm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFF4BBB72D0B33C60094B4AC /* Debug */,
+				AFF4BBB82D0B33C60094B4AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AFF4BB8A2D0B33C40094B4AC /* Project object */;
+}
