@@ -29,6 +29,7 @@
 		AF1C2C5B2D1437E400EE0820 /* dmsg.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C5A2D1437DE00EE0820 /* dmsg.js */; };
 		AF1C2C5D2D14632400EE0820 /* chown.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C5C2D14631F00EE0820 /* chown.js */; };
 		AF5012992D0E7B72009CA6BB /* serialctl.js in Resources */ = {isa = PBXBuildFile; fileRef = AF5012982D0E7B6B009CA6BB /* serialctl.js */; };
+		AFAD42F72D1D775F000358F4 /* chat.js in Resources */ = {isa = PBXBuildFile; fileRef = AFAD42F62D1D7752000358F4 /* chat.js */; };
 		AFF5312C2D11B68D00C3E23C /* exploit.js in Resources */ = {isa = PBXBuildFile; fileRef = AFF5312B2D11B68800C3E23C /* exploit.js */; };
 		AFF531312D13441800C3E23C /* shutdown.js in Resources */ = {isa = PBXBuildFile; fileRef = AFF531302D13441200C3E23C /* shutdown.js */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		AF1C2C5A2D1437DE00EE0820 /* dmsg.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = dmsg.js; sourceTree = "<group>"; };
 		AF1C2C5C2D14631F00EE0820 /* chown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chown.js; sourceTree = "<group>"; };
 		AF5012982D0E7B6B009CA6BB /* serialctl.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = serialctl.js; sourceTree = "<group>"; };
+		AFAD42F62D1D7752000358F4 /* chat.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chat.js; sourceTree = "<group>"; };
 		AFF4BB922D0B33C40094B4AC /* JSTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF5312B2D11B68800C3E23C /* exploit.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = exploit.js; sourceTree = "<group>"; };
 		AFF531302D13441200C3E23C /* shutdown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = shutdown.js; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 		AF05C7D62D0E02D200B3BC22 /* JSOS */ = {
 			isa = PBXGroup;
 			children = (
+				AFAD42F62D1D7752000358F4 /* chat.js */,
 				AF1C2C5C2D14631F00EE0820 /* chown.js */,
 				AF1C2C5A2D1437DE00EE0820 /* dmsg.js */,
 				AF1C2C582D1437D400EE0820 /* dserver.js */,
@@ -198,6 +201,7 @@
 				AF05C7E22D0E03C800B3BC22 /* ps.js in Resources */,
 				AF18CEC12D0F223600F5A2E8 /* cat.js in Resources */,
 				AF05C7E32D0E03C800B3BC22 /* kill.js in Resources */,
+				AFAD42F72D1D775F000358F4 /* chat.js in Resources */,
 				AF05C7FA2D0E42AD00B3BC22 /* hostname.js in Resources */,
 				AF05C7F42D0E39CF00B3BC22 /* env.js in Resources */,
 				AF05C7E52D0E03C800B3BC22 /* clear.js in Resources */,
