@@ -29,6 +29,7 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 
 import Foundation
 import JavaScriptCore
+import Swifter
 
 var extern_deeplog: (String) -> Void = {_ in}
 
@@ -39,13 +40,34 @@ class JavaScriptInit {
     init(terminal: TerminalWindow) {
         self.terminal = terminal
         self.context = JSContext()
-        beginClock()
         
+        DispatchQueue.main.async {
+            self.terminal.terminalText.text.append("Frida-JS-Kernel-v1.0\n")
+        }
+        
+        beginClock()
+        setupOSPrint()
+        setupProc()
+        setupFS()
+        setupTC()
+        setupHost()
+        startUserspace()
+    }
+    
+    private func deeplog(msg: String) {
+        DispatchQueue.main.async {
+            let timestamp = getClock()
+            self.terminal.terminalText.text.append(String(format: "[%.6f] %@\n", timestamp, msg))
+        }
+    }
+    
+    private func setupOSPrint() -> Void {
         extern_deeplog = { msg in
             self.deeplog(msg: msg)
         }
-        
-        deeplog(msg: "Frida-JS-Kernel-v0.1")
+    }
+    
+    private func setupProc() -> Void {
         deeplog(msg: "[init] setting up kernel_proc")
         deeplog(msg: "usr... okay")
         kernel_proc.loadusr()
@@ -53,6 +75,9 @@ class JavaScriptInit {
         kernel_proc.loadsys()
         deeplog(msg: "pwd... okay")
         kernel_proc.loadpwd()
+    }
+    
+    private func setupFS() -> Void {
         deeplog(msg: "[init] setting up kernel_fs")
         kernel_fs.append(path: "/sbin/shell.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/su.js", perm: [0x00,0x00,0x01])
@@ -69,20 +94,90 @@ class JavaScriptInit {
         kernel_fs.append(path: "/sbin/chown.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/pamctl.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/serialctl.js", perm: [0x00,0x00,0x01])
-        deeplog(msg: "[init] setting up kernel_tc")
-        kernel_tc.addTC(path: "/sbin/shell.js", tc: [SYS_FS_RD,SYS_EXEC])
-        
-        kernel_fs.kdone()
-        deeplog(msg: "[init] starting userspace")
-        
-        js_fork(path: "\(JSTermRoot)/sbin/shell.js", [], ["pwd":"/","bin":"/bin:/sbin:/games"], 0)
     }
     
-    private func deeplog(msg: String) {
-        DispatchQueue.main.async {
-            let timestamp = getClock()
-            self.terminal.terminalText.text.append(String(format: "[%.6f] %@\n", timestamp, msg))
+    private func setupTC() -> Void {
+        deeplog(msg: "[init] setting up kernel_tc")
+        kernel_tc.addTC(path: "/sbin/shell.js", tc: [SYS_FS_RD,SYS_EXEC])
+    }
+    
+    private func setupHost() -> Void {
+        deeplog(msg: "[init] setting up kernel_host")
+        kernel_host.registerServer(name: "kernel")
+        kernel_host.setServerAction(name: "kernel", path: "/proc") { request in
+            var html = """
+            <html>
+            <head>
+                <meta charset="UTF-8"/>
+                <title>Process List</title>
+                <style>
+                    body {
+                        font-family: sans-serif;
+                    }
+                    table {
+                        border-collapse: collapse;
+                        width: 50%;
+                        margin: 20px auto;
+                    }
+                    th, td {
+                        border: 1px solid #ccc;
+                        padding: 8px 12px;
+                        text-align: left;
+                    }
+                    th {
+                        background-color: #f4f4f4;
+                    }
+                    tbody tr:nth-child(even) {
+                        background-color: #f9f9f9;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1 style="text-align:center;">Process List</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>UID</th>
+                            <th>GID</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            """
+            
+            let pids: [UInt16] = kernel_proc.listPID()
+            for pid in pids {
+                let processUID = kernel_proc.getuidname(ofuid: kernel_proc.piduid(ofpid: pid))
+                let processGID = kernel_proc.getuidname(ofuid: kernel_proc.pidgid(ofpid: pid))
+                let processName = kernel_proc.pidname(ofpid: pid)
+                html += """
+                    <tr>
+                        <td>\(pid)</td>
+                        <td>\(processUID)</td>
+                        <td>\(processGID)</td>
+                        <td>\(processName)</td>
+                    </tr>
+                """
+            }
+            
+            // Close table and HTML
+            html += """
+                    </tbody>
+                </table>
+            </body>
+            </html>
+            """
+            
+            return HttpResponse.ok(.html(html))
         }
+        kernel_host.startServer(name: "kernel", port: 50)
+    }
+    
+    private func startUserspace() -> Void {
+        kernel_fs.kdone()
+        deeplog(msg: "[init] starting userspace")
+        js_fork(path: "\(JSTermRoot)/sbin/shell.js", [], ["pwd":"/","bin":"/bin:/sbin:/games"], 0)
     }
 }
 
