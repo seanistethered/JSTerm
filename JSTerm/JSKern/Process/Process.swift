@@ -39,55 +39,68 @@ func destroyJSContext(_ context: inout JSContext?) {
 
 
 class JavaScriptProcess {
-    private(set) var context: JSContext?
+    //private(set) var context: JSContext?
+    private(set) var threads: [JSContext] = []
     private(set) var terminal: TerminalWindow
     private(set) var pid: UInt16
     private(set) var queue: DispatchQueue
     private(set) var path: String
     private(set) var args: [String]
+    private(set) var runs: Bool
+    private var desc: String
     var symbols: [String] = []
     var fd: [String] = Array(repeating: "", count: Int(UINT8_MAX))
     var envp: [String:String]
     
     init(terminal: TerminalWindow, path: String, args: [String], pid: UInt16, envp: [String:String], queue: DispatchQueue) {
         self.terminal = terminal
-        self.context = JSContext()
+        //self.context = JSContext()
+        self.threads = [JSContext()]
         self.pid = pid
         self.queue = queue
         self.path = path
         self.args = args
         self.envp = envp
+        self.runs = false
+        self.desc = ""
         
         loadlib(process: self)
     }
     
     func execute() {
-        loadJavaScriptFile(at: path)
-        _ = callFunction(named: "main", withArguments: [args])
+        if !runs {
+            loadJavaScriptFile(at: path, context: threads[0])
+            _ = callFunction(named: "main", withArguments: [args], context: threads[0])
+            runs = true
+        }
+    }
+    
+    func cthread() {
+        
     }
     
     func terminate() {
         // TODO: implement termination of processes
     }
-
     
-    func loadJavaScriptFile(at filePath: String) {
+    func loadJavaScriptFile(at filePath: String, context: JSContext) {
         do {
             let jsCode = try String(contentsOfFile: filePath, encoding: .utf8)
-            context?.evaluateScript(jsCode)
+            desc = jsCode
+            context.evaluateScript(jsCode)
         } catch {
             extern_deeplog("Kernel Exec Error: \(error)");
         }
     }
 
-    func callFunction(named functionName: String, withArguments arguments: [Any]) -> JSValue? {
-        guard let function = context?.objectForKeyedSubscript(functionName) else {
+    func callFunction(named functionName: String, withArguments arguments: [Any], context: JSContext) -> JSValue? {
+        guard let function = context.objectForKeyedSubscript(functionName) else {
             extern_deeplog("Function \(functionName) not found.")
             return nil
         }
         
         let result = function.call(withArguments: arguments)
-        if let exception = context?.exception {
+        if let exception = context.exception {
             extern_deeplog("process \(pid): JavaScript Error in function \(functionName): \(exception.toString() ?? "Unknown error")")
             return nil
         }

@@ -56,9 +56,9 @@ func loadpamlib(process: JavaScriptProcess) {
         }
     }
     
-    ld_add_symbol(symbol: pam_setuid, name: "setuid", process: process)
-    ld_add_symbol(symbol: pam_setgid, name: "setgid", process: process)
-    ld_add_symbol(symbol: pam_setusername, name: "setusername", process: process)
-    ld_add_symbol(symbol: pam_setsyscall, name: "setsyscall", process: process)
-    ld_add_symbol(symbol: pam_unsetsyscall, name: "unsetsyscall", process: process)
+    ld_add_symbol(symbol: pam_setuid, name: "setuid", process: process, thread: 0)
+    ld_add_symbol(symbol: pam_setgid, name: "setgid", process: process, thread: 0)
+    ld_add_symbol(symbol: pam_setusername, name: "setusername", process: process, thread: 0)
+    ld_add_symbol(symbol: pam_setsyscall, name: "setsyscall", process: process, thread: 0)
+    ld_add_symbol(symbol: pam_unsetsyscall, name: "unsetsyscall", process: process, thread: 0)
 }

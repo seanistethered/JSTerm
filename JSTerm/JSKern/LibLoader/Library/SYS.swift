@@ -68,12 +68,12 @@ func loadsyslib(process: JavaScriptProcess) {
         }
     }
     
-    ld_add_symbol(symbol: sys_clock, name: "clock", process: process)
-    ld_add_symbol(symbol: sys_sleep, name: "sleep", process: process)
-    ld_add_symbol(symbol: sys_usleep, name: "usleep", process: process)
-    ld_add_symbol(symbol: sys_getenv, name: "getenv", process: process)
-    ld_add_symbol(symbol: sys_setenv, name: "setenv", process: process)
-    ld_add_symbol(symbol: sys_getenvs, name: "getenvs", process: process)
-    ld_add_symbol(symbol: sys_hostname, name: "gethostname", process: process)
-    ld_add_symbol(symbol: sys_shutdown, name: "shutdown", process: process)
+    ld_add_symbol(symbol: sys_clock, name: "clock", process: process, thread: 0)
+    ld_add_symbol(symbol: sys_sleep, name: "sleep", process: process, thread: 0)
+    ld_add_symbol(symbol: sys_usleep, name: "usleep", process: process, thread: 0)
+    ld_add_symbol(symbol: sys_getenv, name: "getenv", process: process, thread: 0)
+    ld_add_symbol(symbol: sys_setenv, name: "setenv", process: process, thread: 0)
+    ld_add_symbol(symbol: sys_getenvs, name: "getenvs", process: process, thread: 0)
+    ld_add_symbol(symbol: sys_hostname, name: "gethostname", process: process, thread: 0)
+    ld_add_symbol(symbol: sys_shutdown, name: "shutdown", process: process, thread: 0)
 }

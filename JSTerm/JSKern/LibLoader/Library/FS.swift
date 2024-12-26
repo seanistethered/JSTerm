@@ -214,19 +214,19 @@ func loadfslib(process: JavaScriptProcess) {
         return 0
     }
     
-    ld_add_symbol(symbol: fs_list, name: "fs_list", process: process)
-    ld_add_symbol(symbol: fs_read, name: "fs_read", process: process)
-    ld_add_symbol(symbol: fs_write, name: "fs_write", process: process)
-    ld_add_symbol(symbol: fs_remove, name: "fs_remove", process: process)
-    ld_add_symbol(symbol: fs_mkdir, name: "mkdir", process: process)
-    ld_add_symbol(symbol: fs_rmdir, name: "rmdir", process: process)
-    ld_add_symbol(symbol: fs_rmdir, name: "rm", process: process)
-    ld_add_symbol(symbol: fs_touch, name: "touch", process: process)
-    ld_add_symbol(symbol: fs_chdir, name: "chdir", process: process)
+    ld_add_symbol(symbol: fs_list, name: "fs_list", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_read, name: "fs_read", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_write, name: "fs_write", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_remove, name: "fs_remove", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_mkdir, name: "mkdir", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_rmdir, name: "rmdir", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_rmdir, name: "rm", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_touch, name: "touch", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_chdir, name: "chdir", process: process, thread: 0)
     
     // DEBUG!
-    ld_add_symbol(symbol: fs_chown, name: "chown", process: process)
-    ld_add_symbol(symbol: fs_chgrp, name: "chgrp", process: process)
-    ld_add_symbol(symbol: fs_getown, name: "getown", process: process)
-    ld_add_symbol(symbol: fs_getgrp, name: "getgrp", process: process)
+    ld_add_symbol(symbol: fs_chown, name: "chown", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_chgrp, name: "chgrp", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_getown, name: "getown", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_getgrp, name: "getgrp", process: process, thread: 0)
 }

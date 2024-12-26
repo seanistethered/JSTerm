@@ -42,7 +42,7 @@ func loaddbuslib(process: JavaScriptProcess) {
         kernel_dbus.sendmsg(id: id, payload: payload)
     }
     
-    ld_add_symbol(symbol: dbus_register, name: "dbus_register", process: process)
-    ld_add_symbol(symbol: dbus_waitformsg, name: "dbus_waitformsg", process: process)
-    ld_add_symbol(symbol: dbus_sendmsg, name: "dbus_sendmsg", process: process)
+    ld_add_symbol(symbol: dbus_register, name: "dbus_register", process: process, thread: 0)
+    ld_add_symbol(symbol: dbus_waitformsg, name: "dbus_waitformsg", process: process, thread: 0)
+    ld_add_symbol(symbol: dbus_sendmsg, name: "dbus_sendmsg", process: process, thread: 0)
 }

@@ -29,9 +29,9 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 
 import JavaScriptCore
 
-func ld_add_symbol(symbol: Any, name: String, process: JavaScriptProcess) {
-    process.context?.setObject(symbol, forKeyedSubscript: name as NSCopying & NSObjectProtocol)
-    process.symbols.append(name)
+func ld_add_symbol(symbol: Any, name: String, process: JavaScriptProcess, thread: Int) {
+    process.threads[thread].setObject(symbol, forKeyedSubscript: name as NSCopying & NSObjectProtocol)
+    //process.context?.setObject(symbol, forKeyedSubscript: name as NSCopying & NSObjectProtocol)
 }
 
 func loadlib(process: JavaScriptProcess) {
