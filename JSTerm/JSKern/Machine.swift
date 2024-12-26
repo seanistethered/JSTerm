@@ -33,7 +33,10 @@ let JSTermRoot: String = "\(NSHomeDirectory())/Documents/rootfs"
 let JSTermKernel: String = "\(NSHomeDirectory())/Documents/kernelfs"
 var JSTermClock: Double = 0.0
 
-func getclock() -> Double {
-    let current: Double = Date().timeIntervalSince1970
-    return current - JSTermClock
+func beginClock() -> Void {
+    JSTermClock = Date().timeIntervalSince1970
+}
+
+func getClock() -> Double {
+    return Date().timeIntervalSince1970 - JSTermClock
 }

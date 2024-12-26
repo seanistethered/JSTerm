@@ -51,10 +51,18 @@ class FSSegment {
 
 class FS_Protect {
     private var cache: [String:FSSegment] = [:]
+    private var kland: Bool = true
     
     func append(path: String, perm: [UInt8]) {
         extern_deeplog("[kernel_fs.append] \(path): \(perm)")
-        cache[path] = FSSegment(owner: 0, group: 0, read: (perm[0] == 1), write: (perm[1] == 1), execute: (perm[2] == 1), kern: true)
+        cache[path] = FSSegment(owner: 0, group: 0, read: (perm[0] == 1), write: (perm[1] == 1), execute: (perm[2] == 1), kern: kland)
+    }
+    
+    // killswitch
+    func kdone() -> Void {
+        if kland {
+            kland = false
+        }
     }
     
     // perm read

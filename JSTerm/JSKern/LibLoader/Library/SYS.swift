@@ -32,7 +32,7 @@ import JavaScriptCore
 
 func loadsyslib(process: JavaScriptProcess) {
     let sys_clock: @convention(block) () -> Double = {
-        return getclock()
+        return getClock()
     }
     let sys_sleep: @convention(block) (UInt32) -> Void = { time in
         sleep(time)

@@ -39,7 +39,7 @@ class JavaScriptInit {
     init(terminal: TerminalWindow) {
         self.terminal = terminal
         self.context = JSContext()
-        JSTermClock = Date().timeIntervalSince1970
+        beginClock()
         
         extern_deeplog = { msg in
             self.deeplog(msg: msg)
@@ -69,6 +69,7 @@ class JavaScriptInit {
         kernel_fs.append(path: "/sbin/chown.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/pamctl.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/serialctl.js", perm: [0x00,0x00,0x01])
+        kernel_fs.kdone()
         deeplog(msg: "[*] setting up kernel_tc")
         kernel_tc.addTC(path: "/sbin/shell.js", tc: [SYS_FS_RD,SYS_EXEC])
         deeplog(msg: "starting userspace")
@@ -78,7 +79,7 @@ class JavaScriptInit {
     
     private func deeplog(msg: String) {
         DispatchQueue.main.async {
-            let timestamp = getclock()
+            let timestamp = getClock()
             self.terminal.terminalText.text.append(String(format: "[%.6f] %@\n", timestamp, msg))
         }
     }
