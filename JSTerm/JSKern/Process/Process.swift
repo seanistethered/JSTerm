@@ -64,7 +64,7 @@ class JavaScriptProcess {
         self.runs = false
         self.desc = ""
         
-        loadlib(process: self)
+        loadlib(process: self, thread: 0)
     }
     
     func execute() {
@@ -75,8 +75,14 @@ class JavaScriptProcess {
         }
     }
     
-    func cthread() {
-        
+    func cthread(symbol: String) {
+        let tqueue: DispatchQueue = DispatchQueue(label: "com.proc.thread.\(UUID())")
+        let thread: JSContext = JSContext()
+        threads.append(thread)
+        tqueue.async {
+            thread.evaluateScript(self.desc)
+            _ = self.callFunction(named: symbol, withArguments: [], context: thread)
+        }
     }
     
     func terminate() {

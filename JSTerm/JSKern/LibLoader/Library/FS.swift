@@ -72,7 +72,7 @@ private func normalizePath(_ fullPath: String) -> String {
     return normalized
 }
 
-func loadfslib(process: JavaScriptProcess) {
+func loadfslib(process: JavaScriptProcess, thread: Int) {
     let fs_list: @convention(block) (String?) -> [String] = { rawpath in
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_RD) == 0, kernel_fs.isReadable(path: path) {
@@ -214,19 +214,19 @@ func loadfslib(process: JavaScriptProcess) {
         return 0
     }
     
-    ld_add_symbol(symbol: fs_list, name: "fs_list", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_read, name: "fs_read", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_write, name: "fs_write", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_remove, name: "fs_remove", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_mkdir, name: "mkdir", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_rmdir, name: "rmdir", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_rmdir, name: "rm", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_touch, name: "touch", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_chdir, name: "chdir", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_list, name: "fs_list", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_read, name: "fs_read", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_write, name: "fs_write", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_remove, name: "fs_remove", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_mkdir, name: "mkdir", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_rmdir, name: "rmdir", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_rmdir, name: "rm", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_touch, name: "touch", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_chdir, name: "chdir", process: process, thread: thread)
     
     // DEBUG!
-    ld_add_symbol(symbol: fs_chown, name: "chown", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_chgrp, name: "chgrp", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_getown, name: "getown", process: process, thread: 0)
-    ld_add_symbol(symbol: fs_getgrp, name: "getgrp", process: process, thread: 0)
+    ld_add_symbol(symbol: fs_chown, name: "chown", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_chgrp, name: "chgrp", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_getown, name: "getown", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_getgrp, name: "getgrp", process: process, thread: thread)
 }

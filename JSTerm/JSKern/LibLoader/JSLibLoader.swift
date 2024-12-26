@@ -34,11 +34,11 @@ func ld_add_symbol(symbol: Any, name: String, process: JavaScriptProcess, thread
     //process.context?.setObject(symbol, forKeyedSubscript: name as NSCopying & NSObjectProtocol)
 }
 
-func loadlib(process: JavaScriptProcess) {
-    loadfslib(process: process)
-    loadsyslib(process: process)
-    loadproclib(process: process)
-    loadseriallib(process: process)
-    loadpamlib(process: process)
-    loaddbuslib(process: process)
+func loadlib(process: JavaScriptProcess, thread: Int) {
+    loadfslib(process: process, thread: thread)
+    loadsyslib(process: process, thread: thread)
+    loadproclib(process: process, thread: thread)
+    loadseriallib(process: process, thread: thread)
+    loadpamlib(process: process, thread: thread)
+    loaddbuslib(process: process, thread: thread)
 }

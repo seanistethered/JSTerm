@@ -29,7 +29,7 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 
 import JavaScriptCore
 
-func loaddbuslib(process: JavaScriptProcess) {
+func loaddbuslib(process: JavaScriptProcess, thread: Int) {
     let dbus_register: @convention(block) (String) -> Void = { id in
         kernel_dbus.register_dbus(id: id)
     }
@@ -42,7 +42,7 @@ func loaddbuslib(process: JavaScriptProcess) {
         kernel_dbus.sendmsg(id: id, payload: payload)
     }
     
-    ld_add_symbol(symbol: dbus_register, name: "dbus_register", process: process, thread: 0)
-    ld_add_symbol(symbol: dbus_waitformsg, name: "dbus_waitformsg", process: process, thread: 0)
-    ld_add_symbol(symbol: dbus_sendmsg, name: "dbus_sendmsg", process: process, thread: 0)
+    ld_add_symbol(symbol: dbus_register, name: "dbus_register", process: process, thread: thread)
+    ld_add_symbol(symbol: dbus_waitformsg, name: "dbus_waitformsg", process: process, thread: thread)
+    ld_add_symbol(symbol: dbus_sendmsg, name: "dbus_sendmsg", process: process, thread: thread)
 }

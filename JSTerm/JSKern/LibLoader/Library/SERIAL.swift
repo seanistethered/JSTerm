@@ -31,7 +31,7 @@ import SwiftUI
 import UIKit
 import JavaScriptCore
 
-func loadseriallib(process: JavaScriptProcess) {
+func loadseriallib(process: JavaScriptProcess, thread: Int) {
     let jsinit_readline: @convention(block) (String) -> String = { prompt in
         let semaphore = DispatchSemaphore(value: 0)
         var capture: String = ""
@@ -160,18 +160,18 @@ func loadseriallib(process: JavaScriptProcess) {
         }
     }
     
-    ld_add_symbol(symbol: jsinit_osprint, name: "osprint", process: process, thread: 0)
-    ld_add_symbol(symbol: jsinit_print, name: "print", process: process, thread: 0)
-    ld_add_symbol(symbol: jsinit_readline, name: "readline", process: process, thread: 0)
-    ld_add_symbol(symbol: getChar, name: "getchar", process: process, thread: 0)
-    ld_add_symbol(symbol: jsinit_clear, name: "clear", process: process, thread: 0)
-    ld_add_symbol(symbol: jsinit_tokenizer, name: "tokenizer", process: process, thread: 0)
-    ld_add_symbol(symbol: serial_setBackground, name: "serial_setBackground", process: process, thread: 0)
-    ld_add_symbol(symbol: serial_setTextColor, name: "serial_setTextColor", process: process, thread: 0)
-    ld_add_symbol(symbol: serial_setTextSize, name: "serial_setTextSize", process: process, thread: 0)
-    ld_add_symbol(symbol: serial_setTitle, name: "serial_setTitle", process: process, thread: 0)
-    ld_add_symbol(symbol: serial_cursorMove, name: "serial_cursorMove", process: process, thread: 0)
-    ld_add_symbol(symbol: write, name: "write", process: process, thread: 0)
-    ld_add_symbol(symbol: read, name: "read", process: process, thread: 0)
-    ld_add_symbol(symbol: serial_dup2, name: "serial_dup2", process: process, thread: 0)
+    ld_add_symbol(symbol: jsinit_osprint, name: "osprint", process: process, thread: thread)
+    ld_add_symbol(symbol: jsinit_print, name: "print", process: process, thread: thread)
+    ld_add_symbol(symbol: jsinit_readline, name: "readline", process: process, thread: thread)
+    ld_add_symbol(symbol: getChar, name: "getchar", process: process, thread: thread)
+    ld_add_symbol(symbol: jsinit_clear, name: "clear", process: process, thread: thread)
+    ld_add_symbol(symbol: jsinit_tokenizer, name: "tokenizer", process: process, thread: thread)
+    ld_add_symbol(symbol: serial_setBackground, name: "serial_setBackground", process: process, thread: thread)
+    ld_add_symbol(symbol: serial_setTextColor, name: "serial_setTextColor", process: process, thread: thread)
+    ld_add_symbol(symbol: serial_setTextSize, name: "serial_setTextSize", process: process, thread: thread)
+    ld_add_symbol(symbol: serial_setTitle, name: "serial_setTitle", process: process, thread: thread)
+    ld_add_symbol(symbol: serial_cursorMove, name: "serial_cursorMove", process: process, thread: thread)
+    ld_add_symbol(symbol: write, name: "write", process: process, thread: thread)
+    ld_add_symbol(symbol: read, name: "read", process: process, thread: thread)
+    ld_add_symbol(symbol: serial_dup2, name: "serial_dup2", process: process, thread: thread)
 }

@@ -30,7 +30,7 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 import Foundation
 import JavaScriptCore
 
-func loadsyslib(process: JavaScriptProcess) {
+func loadsyslib(process: JavaScriptProcess, thread: Int) {
     let sys_clock: @convention(block) () -> Double = {
         return getClock()
     }
@@ -68,12 +68,12 @@ func loadsyslib(process: JavaScriptProcess) {
         }
     }
     
-    ld_add_symbol(symbol: sys_clock, name: "clock", process: process, thread: 0)
-    ld_add_symbol(symbol: sys_sleep, name: "sleep", process: process, thread: 0)
-    ld_add_symbol(symbol: sys_usleep, name: "usleep", process: process, thread: 0)
-    ld_add_symbol(symbol: sys_getenv, name: "getenv", process: process, thread: 0)
-    ld_add_symbol(symbol: sys_setenv, name: "setenv", process: process, thread: 0)
-    ld_add_symbol(symbol: sys_getenvs, name: "getenvs", process: process, thread: 0)
-    ld_add_symbol(symbol: sys_hostname, name: "gethostname", process: process, thread: 0)
-    ld_add_symbol(symbol: sys_shutdown, name: "shutdown", process: process, thread: 0)
+    ld_add_symbol(symbol: sys_clock, name: "clock", process: process, thread: thread)
+    ld_add_symbol(symbol: sys_sleep, name: "sleep", process: process, thread: thread)
+    ld_add_symbol(symbol: sys_usleep, name: "usleep", process: process, thread: thread)
+    ld_add_symbol(symbol: sys_getenv, name: "getenv", process: process, thread: thread)
+    ld_add_symbol(symbol: sys_setenv, name: "setenv", process: process, thread: thread)
+    ld_add_symbol(symbol: sys_getenvs, name: "getenvs", process: process, thread: thread)
+    ld_add_symbol(symbol: sys_hostname, name: "gethostname", process: process, thread: thread)
+    ld_add_symbol(symbol: sys_shutdown, name: "shutdown", process: process, thread: thread)
 }

@@ -30,7 +30,7 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 import Foundation
 import JavaScriptCore
 
-func loadpamlib(process: JavaScriptProcess) {
+func loadpamlib(process: JavaScriptProcess, thread: Int) {
     let pam_setuid: @convention(block) (UInt16) -> UInt32 = { uid in
         return kernel_proc.setuid(topid: process.pid, touid: uid)
     }
@@ -56,9 +56,9 @@ func loadpamlib(process: JavaScriptProcess) {
         }
     }
     
-    ld_add_symbol(symbol: pam_setuid, name: "setuid", process: process, thread: 0)
-    ld_add_symbol(symbol: pam_setgid, name: "setgid", process: process, thread: 0)
-    ld_add_symbol(symbol: pam_setusername, name: "setusername", process: process, thread: 0)
-    ld_add_symbol(symbol: pam_setsyscall, name: "setsyscall", process: process, thread: 0)
-    ld_add_symbol(symbol: pam_unsetsyscall, name: "unsetsyscall", process: process, thread: 0)
+    ld_add_symbol(symbol: pam_setuid, name: "setuid", process: process, thread: thread)
+    ld_add_symbol(symbol: pam_setgid, name: "setgid", process: process, thread: thread)
+    ld_add_symbol(symbol: pam_setusername, name: "setusername", process: process, thread: thread)
+    ld_add_symbol(symbol: pam_setsyscall, name: "setsyscall", process: process, thread: thread)
+    ld_add_symbol(symbol: pam_unsetsyscall, name: "unsetsyscall", process: process, thread: thread)
 }
