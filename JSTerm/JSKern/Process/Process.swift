@@ -79,7 +79,9 @@ class JavaScriptProcess {
         let tqueue: DispatchQueue = DispatchQueue(label: "com.proc.thread.\(UUID())")
         let thread: JSContext = JSContext()
         threads.append(thread)
+        let we = threads.count
         tqueue.async {
+            loadlib(process: self, thread: we - 1)
             thread.evaluateScript(self.desc)
             _ = self.callFunction(named: symbol, withArguments: [], context: thread)
         }

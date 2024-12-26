@@ -95,6 +95,9 @@ func loadproclib(process: JavaScriptProcess, thread: Int) {
     let jsinit_getgid: @convention(block) () -> UInt16 = {
         return kernel_proc.pidgid(ofpid: process.pid)
     }
+    let jsinit_cthread: @convention(block) (String) -> Void = { symbol in
+        process.cthread(symbol: symbol)
+    }
 
     ld_add_symbol(symbol: jsinit_exec, name: "exec", process: process, thread: thread)
     ld_add_symbol(symbol: jsinit_kill, name: "kill", process: process, thread: thread)
@@ -106,4 +109,5 @@ func loadproclib(process: JavaScriptProcess, thread: Int) {
     ld_add_symbol(symbol: jsinit_getuid, name: "getuid", process: process, thread: thread)
     ld_add_symbol(symbol: jsinit_getgid, name: "getgid", process: process, thread: thread)
     ld_add_symbol(symbol: proc_getusername, name: "getusername", process: process, thread: thread)
+    ld_add_symbol(symbol: jsinit_cthread, name: "cthread", process: process, thread: thread)
 }
