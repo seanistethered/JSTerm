@@ -46,14 +46,14 @@ class JavaScriptInit {
         }
         
         deeplog(msg: "Frida-JS-Kernel-v0.1")
-        deeplog(msg: "[*] setting up kernel_proc")
+        deeplog(msg: "[init] setting up kernel_proc")
         deeplog(msg: "usr... okay")
         kernel_proc.loadusr()
         deeplog(msg: "sys... okay")
         kernel_proc.loadsys()
         deeplog(msg: "pwd... okay")
         kernel_proc.loadpwd()
-        deeplog(msg: "[*] setting up kernel_fs")
+        deeplog(msg: "[init] setting up kernel_fs")
         kernel_fs.append(path: "/sbin/shell.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/su.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/ls.js", perm: [0x00,0x00,0x01])
@@ -69,10 +69,11 @@ class JavaScriptInit {
         kernel_fs.append(path: "/sbin/chown.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/pamctl.js", perm: [0x00,0x00,0x01])
         kernel_fs.append(path: "/sbin/serialctl.js", perm: [0x00,0x00,0x01])
-        kernel_fs.kdone()
-        deeplog(msg: "[*] setting up kernel_tc")
+        deeplog(msg: "[init] setting up kernel_tc")
         kernel_tc.addTC(path: "/sbin/shell.js", tc: [SYS_FS_RD,SYS_EXEC])
-        deeplog(msg: "starting userspace")
+        
+        kernel_fs.kdone()
+        deeplog(msg: "[init] starting userspace")
         
         js_fork(path: "\(JSTermRoot)/sbin/shell.js", [], ["pwd":"/","bin":"/bin:/sbin:/games"], 0)
     }

@@ -62,6 +62,7 @@ class FS_Protect {
     func kdone() -> Void {
         if kland {
             kland = false
+            extern_deeplog("[kernel_fs.kdone] switched to userspace mode")
         }
     }
     
@@ -96,24 +97,34 @@ class FS_Protect {
     // perm mgmt
     func setReadable(path: String, value: Bool) {
         guard let _ = cache[path] else { return }
-        cache[path]?.read = value
+        if !(cache[path]?.kern ?? false) {
+            cache[path]?.read = value
+        }
     }
     func setWritable(path: String, value: Bool) {
         guard let _ = cache[path] else { return }
-        cache[path]?.write = value
+        if !(cache[path]?.kern ?? false) {
+            cache[path]?.write = value
+        }
     }
     func setExecutable(path: String, value: Bool) {
         guard let _ = cache[path] else { return }
-        cache[path]?.execute = value
+        if !(cache[path]?.kern ?? false) {
+            cache[path]?.execute = value
+        }
     }
     
     func setOwner(path: String, value: UInt16) {
         guard let _ = cache[path] else { return }
-        cache[path]?.owner = value
+        if !(cache[path]?.kern ?? false) {
+            cache[path]?.owner = value
+        }
     }
     func setGroup(path: String, value: UInt16) {
         guard let _ = cache[path] else { return }
-        cache[path]?.group = value
+        if !(cache[path]?.kern ?? false) {
+            cache[path]?.group = value
+        }
     }
     
     // general stuff
