@@ -47,8 +47,12 @@ class JS_DBUS {
 class JS_DBUS_SYSTEM {
     private var bus: [String:JS_DBUS] = [:]
     
-    func register_dbus(id: String) {
+    func register(id: String) {
         bus[id] = JS_DBUS()
+    }
+    
+    func unregister(id: String) {
+        bus.removeValue(forKey: id)
     }
     
     func waitformsg(id: String) -> String {

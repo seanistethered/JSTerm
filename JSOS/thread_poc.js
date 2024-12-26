@@ -8,11 +8,9 @@
 function poc()
 {
     dbus_register("com.thread_poc.poc");
-    while (true)
-    {
-        let msg = dbus_waitformsg("com.thread_poc.poc");
-        print(msg + "\n");
-    }
+    let msg = dbus_waitformsg("com.thread_poc.poc");
+    print(msg + "\n");
+    dbus_unregister("com.thread_poc.poc");
 }
 
 function main(args)

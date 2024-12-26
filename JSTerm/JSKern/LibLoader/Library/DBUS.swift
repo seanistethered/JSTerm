@@ -31,7 +31,11 @@ import JavaScriptCore
 
 func loaddbuslib(process: JavaScriptProcess, thread: Int) {
     let dbus_register: @convention(block) (String) -> Void = { id in
-        kernel_dbus.register_dbus(id: id)
+        kernel_dbus.register(id: id)
+    }
+    
+    let dbus_unregister: @convention(block) (String) -> Void = { id in
+        kernel_dbus.unregister(id: id)
     }
     
     let dbus_waitformsg: @convention(block) (String) -> String = { id in
@@ -43,6 +47,7 @@ func loaddbuslib(process: JavaScriptProcess, thread: Int) {
     }
     
     ld_add_symbol(symbol: dbus_register, name: "dbus_register", process: process, thread: thread)
+    ld_add_symbol(symbol: dbus_unregister, name: "dbus_unregister", process: process, thread: thread)
     ld_add_symbol(symbol: dbus_waitformsg, name: "dbus_waitformsg", process: process, thread: thread)
     ld_add_symbol(symbol: dbus_sendmsg, name: "dbus_sendmsg", process: process, thread: thread)
 }

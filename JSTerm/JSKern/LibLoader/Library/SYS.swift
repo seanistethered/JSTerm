@@ -67,6 +67,9 @@ func loadsyslib(process: JavaScriptProcess, thread: Int) {
             warnthekernel(process: process.pid, callname: "SYS_SYSCTL")
         }
     }
+    let sys_uuid: @convention(block) () -> String = {
+        return "\(UUID())"
+    }
     
     ld_add_symbol(symbol: sys_clock, name: "clock", process: process, thread: thread)
     ld_add_symbol(symbol: sys_sleep, name: "sleep", process: process, thread: thread)
@@ -76,4 +79,5 @@ func loadsyslib(process: JavaScriptProcess, thread: Int) {
     ld_add_symbol(symbol: sys_getenvs, name: "getenvs", process: process, thread: thread)
     ld_add_symbol(symbol: sys_hostname, name: "gethostname", process: process, thread: thread)
     ld_add_symbol(symbol: sys_shutdown, name: "shutdown", process: process, thread: thread)
+    ld_add_symbol(symbol: sys_uuid, name: "uuid", process: process, thread: thread)
 }
