@@ -104,46 +104,61 @@ class JavaScriptInit {
     private func setupHost() -> Void {
         deeplog(msg: "[init] setting up kernel_host")
         kernel_host.registerServer(name: "kernel")
+        kernel_host.setServerAction(name: "kernel", path: "/") { request in
+            return HttpResponse.ok(.html(
+            """
+            <html>
+                <head>
+                </head>
+                <body>
+                    <a href="proc">
+                        <button>Processes</button>
+                    </a>
+                </body>
+            </html>
+            """
+            ))
+        }
         kernel_host.setServerAction(name: "kernel", path: "/proc") { request in
             var html = """
             <html>
-            <head>
-                <meta charset="UTF-8"/>
-                <title>Process List</title>
-                <style>
-                    body {
-                        font-family: sans-serif;
-                    }
-                    table {
-                        border-collapse: collapse;
-                        width: 50%;
-                        margin: 20px auto;
-                    }
-                    th, td {
-                        border: 1px solid #ccc;
-                        padding: 8px 12px;
-                        text-align: left;
-                    }
-                    th {
-                        background-color: #f4f4f4;
-                    }
-                    tbody tr:nth-child(even) {
-                        background-color: #f9f9f9;
-                    }
-                </style>
-            </head>
-            <body>
-                <h1 style="text-align:center;">Process List</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>PID</th>
-                            <th>UID</th>
-                            <th>GID</th>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <head>
+                    <meta charset="UTF-8"/>
+                    <title>Process List</title>
+                    <style>
+                        body {
+                            font-family: sans-serif;
+                        }
+                        table {
+                            border-collapse: collapse;
+                            width: 50%;
+                            margin: 20px auto;
+                        }
+                        th, td {
+                            border: 1px solid #ccc;
+                            padding: 8px 12px;
+                            text-align: left;
+                        }
+                        th {
+                            background-color: #f4f4f4;
+                        }
+                        tbody tr:nth-child(even) {
+                            background-color: #f9f9f9;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1 style="text-align:center;">Process List</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>PID</th>
+                                <th>UID</th>
+                                <th>GID</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
             """
             
             let pids: [UInt16] = kernel_proc.listPID()
@@ -163,9 +178,9 @@ class JavaScriptInit {
             
             // Close table and HTML
             html += """
-                    </tbody>
-                </table>
-            </body>
+                        </tbody>
+                    </table>
+                </body>
             </html>
             """
             
