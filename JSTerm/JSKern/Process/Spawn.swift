@@ -1,5 +1,5 @@
 /*
-JSSpawn.swift
+Spawn.swift
  
 Copyright (C) 2024 fridakitten
 

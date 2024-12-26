@@ -1,5 +1,5 @@
 /*
-JSProcess.swift
+Process.swift
  
 Copyright (C) 2024 fridakitten
 

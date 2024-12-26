@@ -1,5 +1,5 @@
 /*
-JSKernel.swift
+Dbus.swift
  
 Copyright (C) 2024 fridakitten
 
@@ -27,7 +27,37 @@ along with FridaCodeManager. If not, see <https://www.gnu.org/licenses/>.
 Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 */
 
-let kernel_proc = PIDManager()
-let kernel_fs = FS_Protect()
-let kernel_tc = FS_trustcache()
-let kernel_dbus = JS_DBUS_SYSTEM()
+import Foundation
+
+class JS_DBUS {
+    private let semaphore = DispatchSemaphore(value: 0)
+    private var data: String = ""
+    
+    func waitformsg() -> String {
+        semaphore.wait()
+        return data
+    }
+    
+    func sendmsg(payload: String) {
+        data = payload
+        semaphore.signal()
+    }
+}
+
+class JS_DBUS_SYSTEM {
+    private var bus: [String:JS_DBUS] = [:]
+    
+    func register_dbus(id: String) {
+        bus[id] = JS_DBUS()
+    }
+    
+    func waitformsg(id: String) -> String {
+        guard let idbus: JS_DBUS = bus[id] else { return "" }
+        return idbus.waitformsg()
+    }
+    
+    func sendmsg(id: String, payload: String) {
+        guard let idbus: JS_DBUS = bus[id] else { return }
+        idbus.sendmsg(payload: payload)
+    }
+}
