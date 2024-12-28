@@ -108,13 +108,41 @@ class JavaScriptInit {
             return HttpResponse.ok(.html(
             """
             <html>
-                <head>
-                </head>
-                <body>
-                    <a href="proc">
-                        <button>Processes</button>
-                    </a>
-                </body>
+              <head>
+                <style>
+                  body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                  }
+                  a.button {
+                    display: inline-block;
+                    background-color: white;
+                    color: black;
+                    padding: 16px 24px;
+                    text-decoration: none;
+                    font-size: 18px;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: black;
+                    transition: background-color 0.3s ease;
+                  }
+                  a.button:hover {
+                    background-color: black;
+                    color: white;
+                  }
+                </style>
+              </head>
+              <body>
+                <a class="button" href="proc">
+                  Processes
+                </a>
+              </body>
             </html>
             """
             ))

@@ -54,7 +54,6 @@ class JavaScriptProcess {
     
     init(terminal: TerminalWindow, path: String, args: [String], pid: UInt16, envp: [String:String], queue: DispatchQueue) {
         self.terminal = terminal
-        //self.context = JSContext()
         self.threads = [JSContext()]
         self.pid = pid
         self.queue = queue
