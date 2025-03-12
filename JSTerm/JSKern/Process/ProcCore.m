@@ -65,6 +65,7 @@ void* proccore_thread(void *args)
     
     [self assignThread:pid thread:thread];
     
+    // TODO: handle process killing the proper way if a parent process of many child processes gets killed
     pthread_join(*thread, NULL);
 }
 
