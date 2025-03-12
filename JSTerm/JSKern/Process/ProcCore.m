@@ -7,22 +7,18 @@
 
 #import "ProcCore.h"
 
+/*
+ @Brief structure for ProcCoreHelper
+ */
 typedef struct {
     NSString *code;
     JSContext *ctx;
     NSArray *args;
 } thread_args_js_t;
 
-proccorehelper *helper = NULL;
-
-void proccore_init(void)
-{
-    if(helper == NULL)
-    {
-        helper = [[proccorehelper alloc] init];
-    }
-}
-
+/*
+ @Brief thread for ProcCoreHelper
+ */
 void* proccore_thread(void *args)
 {
     thread_args_js_t *targs = (thread_args_js_t*)args;
@@ -36,9 +32,29 @@ void* proccore_thread(void *args)
     return NULL;
 }
 
-void proccore_run(uint16_t pid, NSString *code, JSContext *ctx, NSArray *jsargs)
-{
-    proccore_init();
+/*
+ @Brief ProcCoreHelper
+ */
+@implementation ProcCoreHelper
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _proc = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
+- (void)assignThread:(uint16_t)pid thread:(pthread_t *)thread {
+    self.proc[@(pid)] = [NSValue valueWithPointer:thread];
+}
+
+- (pthread_t *)getThread:(uint16_t)pid {
+    NSValue *value = self.proc[@(pid)];
+    return value ? (pthread_t *)[value pointerValue] : NULL;
+}
+
+- (void)run:(uint16_t)pid code:(NSString*)code ctx:(JSContext*)ctx jsargs:(NSArray*)jsargs {
     thread_args_js_t *args = malloc(sizeof(thread_args_js_t));
     args->code = code;
     args->ctx = ctx;
@@ -46,15 +62,15 @@ void proccore_run(uint16_t pid, NSString *code, JSContext *ctx, NSArray *jsargs)
     
     pthread_t *thread = malloc(sizeof(pthread_t));
     pthread_create(thread, NULL, proccore_thread, args);
-    [helper assignThreadWithPid:pid thread:thread];
+    
+    [self assignThread:pid thread:thread];
+    
     pthread_join(*thread, NULL);
 }
 
-void proccore_kill(uint16_t pid)
-{
-    proccore_init();
-    
-    pthread_t *thread = [helper getThreadWithPid:pid];
-    
+- (void)kill:(uint16_t)pid {
+    pthread_t *thread = [self getThread:pid];
     pthread_cancel(*thread);
 }
+
+@end

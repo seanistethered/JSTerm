@@ -7,9 +7,14 @@
 
 #import <Foundation/Foundation.h>
 #import <JavaScriptCore/JavaScriptCore.h>
-#import <JSTerm-Swift.h>
 #include <pthread.h>
 
-void proccore_run(uint16_t pid, NSString *code, JSContext *ctx, NSArray *jsargs);
-void proccore_kill(uint16_t pid);
-void proccore_assign(uint16_t pid, pthread_t thread);
+@interface ProcCoreHelper : NSObject
+
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSValue *> *proc;
+
+- (void)assignThread:(uint16_t)pid thread:(pthread_t *)thread;
+- (pthread_t *)getThread:(uint16_t)pid;
+- (void)run:(uint16_t)pid code:(NSString*)code ctx:(JSContext*)ctx jsargs:(NSArray*)jsargs;
+- (void)kill:(uint16_t)pid;
+@end

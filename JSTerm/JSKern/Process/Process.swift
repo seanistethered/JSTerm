@@ -82,21 +82,14 @@ class JavaScriptProcess {
     
     func terminate() {
         semaphore?.signal()
-        proccore_kill(pid)
+        kernel_proc_thread.kill(pid)
     }
     
     func loadJavaScriptFile(at filePath: String, context: JSContext) {
-        /*do {
-            let jsCode = try String(contentsOfFile: filePath, encoding: .utf8)
-            desc = jsCode
-            context.evaluateScript(jsCode)
-        } catch {
-            extern_deeplog("Kernel Exec Error: \(error)");
-        }*/
         do {
             let jsCode = try String(contentsOfFile: filePath, encoding: .utf8)
             desc = jsCode
-            proccore_run(pid, jsCode, context, [args])
+            kernel_proc_thread.run(pid, code: jsCode, ctx: context, jsargs: [args])
         } catch {
             extern_deeplog("Kernel Exec Error: \(error)");
         }

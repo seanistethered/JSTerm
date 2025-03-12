@@ -28,6 +28,7 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 */
 
 let kernel_proc = PIDManager()
+let kernel_proc_thread = ProcCoreHelper()
 let kernel_fs = FS_Protect()
 let kernel_tc = FS_trustcache()
 let kernel_dbus = JS_DBUS_SYSTEM()
