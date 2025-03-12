@@ -8,15 +8,6 @@
 #import "ProcCore.h"
 
 /*
- @Brief structure for ProcCoreHelper
- */
-typedef struct {
-    NSString *code;
-    JSContext *ctx;
-    NSArray *args;
-} thread_args_js_t;
-
-/*
  @Brief thread for ProcCoreHelper
  */
 void* proccore_thread(void *args)
@@ -26,8 +17,8 @@ void* proccore_thread(void *args)
     JSContext *ctx = targs->ctx;
     
     [ctx evaluateScript:targs->code];
-    JSValue *mainFunction = [ctx objectForKeyedSubscript:@"main"];
-    [mainFunction callWithArguments:targs->args];
+    JSValue *function = [ctx objectForKeyedSubscript:targs->symbol];
+    [function callWithArguments:targs->args];
     
     return NULL;
 }
@@ -59,6 +50,8 @@ void* proccore_thread(void *args)
     args->code = code;
     args->ctx = ctx;
     args->args = jsargs;
+    args->symbol = @"main";
+    args->evaluate_code = YES;
     
     pthread_t *thread = malloc(sizeof(pthread_t));
     pthread_create(thread, NULL, proccore_thread, args);

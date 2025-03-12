@@ -9,6 +9,20 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #include <pthread.h>
 
+/*
+ @Brief structure for ProcCoreHelper
+ */
+typedef struct {
+    NSString *code;
+    NSString *symbol;
+    JSContext *ctx;
+    NSArray *args;
+    BOOL evaluate_code;
+} thread_args_js_t;
+
+/*
+ @Brief ProcCoreHelper is to use pthreads to run processes
+ */
 @interface ProcCoreHelper : NSObject
 
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSValue *> *proc;

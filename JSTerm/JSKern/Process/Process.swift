@@ -70,44 +70,19 @@ class JavaScriptProcess {
         if !runs {
             if let context = context {
                 runs = true
-                loadJavaScriptFile(at: path, context: context)
-                //_ = callFunction(named: function, withArguments: [args], context: context)
+                do {
+                    let jsCode = try String(contentsOfFile: path, encoding: .utf8)
+                    desc = jsCode
+                    kernel_proc_thread.run(pid, code: jsCode, ctx: context, jsargs: [args])
+                } catch {
+                    extern_deeplog("Kernel Exec Error: \(error)");
+                }
             }
         }
-    }
-    
-    func cthread(symbol: String) {
-        //js_thread(function: symbol, self.pid)
     }
     
     func terminate() {
         semaphore?.signal()
         kernel_proc_thread.kill(pid)
     }
-    
-    func loadJavaScriptFile(at filePath: String, context: JSContext) {
-        do {
-            let jsCode = try String(contentsOfFile: filePath, encoding: .utf8)
-            desc = jsCode
-            kernel_proc_thread.run(pid, code: jsCode, ctx: context, jsargs: [args])
-        } catch {
-            extern_deeplog("Kernel Exec Error: \(error)");
-        }
-    }
-
-    func callFunction(named functionName: String, withArguments arguments: [Any], context: JSContext) -> JSValue? {
-        guard let function = context.objectForKeyedSubscript(functionName) else {
-            extern_deeplog("Function \(functionName) not found.")
-            return nil
-        }
-        
-        let result = function.call(withArguments: arguments)
-        if let exception = context.exception {
-            extern_deeplog("process \(pid): JavaScript Error in function \(functionName): \(exception.toString() ?? "Unknown error")")
-            return nil
-        }
-        
-        return result
-    }
-
 }
