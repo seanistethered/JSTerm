@@ -152,14 +152,15 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             // Display the active TerminalWindow
-            active
-                //.ignoresSafeArea(.all)
-                .id(activeid)
-                .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.25)) {
-                        activeBar = !activeBar
+            VStack {
+                active
+                    .id(activeid)
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            activeBar = !activeBar
+                        }
                     }
-                }
+            }
         
             //if activeBar {
                 VStack {
@@ -177,8 +178,8 @@ struct ContentView: View {
                 terminalViews = TerminalWindows
                 if !terminalViews.contains(active.rootView) {
                     active = RootTerminalView(rootView: terminalViews[0])
+                    activeid = UUID()
                 }
-                activeid = UUID()
             }
             DispatchQueue.global(qos: .utility).async {
                 DispatchQueue.main.sync {
