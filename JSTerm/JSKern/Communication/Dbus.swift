@@ -30,17 +30,21 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 import Foundation
 
 class JS_DBUS {
-    private let semaphore = DispatchSemaphore(value: 0)
+    private var semaphore: DispatchSemaphore?
     private var data: String = ""
     
+    func attachsemaphore(semaphore: DispatchSemaphore) -> Void {
+        self.semaphore = semaphore
+    }
+    
     func waitformsg() -> String {
-        semaphore.wait()
+        semaphore?.wait()
         return data
     }
     
     func sendmsg(payload: String) {
         data = payload
-        semaphore.signal()
+        semaphore?.signal()
     }
 }
 
@@ -55,8 +59,9 @@ class JS_DBUS_SYSTEM {
         bus.removeValue(forKey: id)
     }
     
-    func waitformsg(id: String) -> String {
+    func waitformsg(semaphore: DispatchSemaphore, id: String) -> String {
         guard let idbus: JS_DBUS = bus[id] else { return "" }
+        idbus.attachsemaphore(semaphore: semaphore)
         return idbus.waitformsg()
     }
     

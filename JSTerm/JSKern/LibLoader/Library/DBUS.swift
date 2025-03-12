@@ -39,10 +39,14 @@ func loaddbuslib(process: JavaScriptProcess) {
     }
     
     let dbus_waitformsg: @convention(block) (String) -> String = { id in
-        return kernel_dbus.waitformsg(id: id)
+        let semaphore = DispatchSemaphore(value: 0)
+        process.semaphore = semaphore
+        return kernel_dbus.waitformsg(semaphore: semaphore, id: id)
     }
     
     let dbus_sendmsg: @convention(block) (String, String) -> Void = { id,payload in
+        let semaphore = DispatchSemaphore(value: 0)
+        process.semaphore = semaphore
         kernel_dbus.sendmsg(id: id, payload: payload)
     }
     
