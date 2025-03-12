@@ -104,6 +104,11 @@ class JavaScriptInit {
     private func setupHost() -> Void {
         deeplog(msg: "[init] setting up kernel_host")
         kernel_host.registerServer(name: "kernel")
+        // functions
+        kernel_host.setServerAction(name: "kernel", path: "/shutdown") { _ in
+            exit(0)
+        }
+        // control
         kernel_host.setServerAction(name: "kernel", path: "/") { request in
             return HttpResponse.ok(.html(
             """
@@ -120,7 +125,7 @@ class JavaScriptInit {
                     align-items: center;
                     height: 100vh;
                   }
-                  a.button {
+                  button.button {
                     display: inline-block;
                     background-color: white;
                     color: black;
@@ -130,17 +135,42 @@ class JavaScriptInit {
                     border-style: solid;
                     border-width: 1px;
                     border-color: black;
+                    cursor: pointer;
                     transition: background-color 0.3s ease;
                   }
-                  a.button:hover {
+                  button.button:hover {
                     background-color: black;
+                    color: white;
+                  }
+                  button.button2 {
+                    display: inline-block;
+                    background-color: white;
+                    color: red;
+                    padding: 16px 24px;
+                    text-decoration: none;
+                    font-size: 18px;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: red;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                  }
+                  button.button2:hover {
+                    background-color: red;
                     color: white;
                   }
                 </style>
               </head>
               <body>
-                <a class="button" href="proc">
-                  Processes
+                <a href="proc">
+                  <button class="button">
+                      Processes
+                  </button>
+                </a>
+                <a href="shutdown">
+                  <button class="button2">
+                      Shutdown
+                  </button>
                 </a>
               </body>
             </html>
@@ -220,7 +250,7 @@ class JavaScriptInit {
     private func startUserspace() -> Void {
         kernel_fs.kdone()
         deeplog(msg: "[init] starting userspace")
-        js_fork(path: "\(JSTermRoot)/sbin/shell.js", [], ["pwd":"/","bin":"/bin:/sbin:/games"], 0)
+        js_fork(path: "\(JSTermRoot)/sbin/shell.js", [], ["pwd":"/","bin":"/sbin:/bin:/games"], 0)
     }
 }
 

@@ -29,16 +29,15 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 
 import JavaScriptCore
 
-func ld_add_symbol(symbol: Any, name: String, process: JavaScriptProcess, thread: Int) {
-    process.threads[thread].setObject(symbol, forKeyedSubscript: name as NSCopying & NSObjectProtocol)
-    //process.context?.setObject(symbol, forKeyedSubscript: name as NSCopying & NSObjectProtocol)
+func ld_add_symbol(symbol: Any, name: String, process: JavaScriptProcess) {
+    process.context?.setObject(symbol, forKeyedSubscript: name as NSCopying & NSObjectProtocol)
 }
 
-func loadlib(process: JavaScriptProcess, thread: Int) {
-    loadfslib(process: process, thread: thread)
-    loadsyslib(process: process, thread: thread)
-    loadproclib(process: process, thread: thread)
-    loadseriallib(process: process, thread: thread)
-    loadpamlib(process: process, thread: thread)
-    loaddbuslib(process: process, thread: thread)
+func loadlib(process: JavaScriptProcess) {
+    loadfslib(process: process)
+    loadsyslib(process: process)
+    loadproclib(process: process)
+    loadseriallib(process: process)
+    loadpamlib(process: process)
+    loaddbuslib(process: process)
 }

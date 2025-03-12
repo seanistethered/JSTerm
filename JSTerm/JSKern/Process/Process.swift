@@ -39,8 +39,7 @@ func destroyJSContext(_ context: inout JSContext?) {
 
 
 class JavaScriptProcess {
-    //private(set) var context: JSContext?
-    private(set) var threads: [JSContext] = []
+    private(set) var context: JSContext?
     private(set) var terminal: TerminalWindow
     private(set) var pid: UInt16
     private(set) var queue: DispatchQueue
@@ -48,13 +47,14 @@ class JavaScriptProcess {
     private(set) var args: [String]
     private(set) var runs: Bool
     private var desc: String
+    var semaphore: DispatchSemaphore? = nil
     var symbols: [String] = []
     var fd: [String] = Array(repeating: "", count: Int(UINT8_MAX))
     var envp: [String:String]
     
     init(terminal: TerminalWindow, path: String, args: [String], pid: UInt16, envp: [String:String], queue: DispatchQueue) {
         self.terminal = terminal
-        self.threads = [JSContext()]
+        context = JSContext()
         self.pid = pid
         self.queue = queue
         self.path = path
@@ -63,38 +63,40 @@ class JavaScriptProcess {
         self.runs = false
         self.desc = ""
         
-        loadlib(process: self, thread: 0)
+        loadlib(process: self)
     }
     
-    func execute() {
+    func execute(_ function: String) {
         if !runs {
-            loadJavaScriptFile(at: path, context: threads[0])
-            _ = callFunction(named: "main", withArguments: [args], context: threads[0])
-            runs = true
+            if let context = context {
+                runs = true
+                loadJavaScriptFile(at: path, context: context)
+                //_ = callFunction(named: function, withArguments: [args], context: context)
+            }
         }
     }
     
     func cthread(symbol: String) {
-        let tqueue: DispatchQueue = DispatchQueue(label: "com.proc.thread.\(UUID())")
-        let thread: JSContext = JSContext()
-        threads.append(thread)
-        let we = threads.count
-        tqueue.async {
-            loadlib(process: self, thread: we - 1)
-            thread.evaluateScript(self.desc)
-            _ = self.callFunction(named: symbol, withArguments: [], context: thread)
-        }
+        //js_thread(function: symbol, self.pid)
     }
     
     func terminate() {
-        // TODO: implement termination of processes
+        semaphore?.signal()
+        proccore_kill(pid)
     }
     
     func loadJavaScriptFile(at filePath: String, context: JSContext) {
-        do {
+        /*do {
             let jsCode = try String(contentsOfFile: filePath, encoding: .utf8)
             desc = jsCode
             context.evaluateScript(jsCode)
+        } catch {
+            extern_deeplog("Kernel Exec Error: \(error)");
+        }*/
+        do {
+            let jsCode = try String(contentsOfFile: filePath, encoding: .utf8)
+            desc = jsCode
+            proccore_run(pid, jsCode, context, [args])
         } catch {
             extern_deeplog("Kernel Exec Error: \(error)");
         }

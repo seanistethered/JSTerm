@@ -60,7 +60,7 @@ func js_fork(path: String, tc: [UInt8] = [], _ args: [String],  _ envp: [String:
             proc_queue.async {
                 let proc = JavaScriptProcess(terminal: window, path: path, args: args, pid: mypid, envp: envp, queue: proc_queue)
                 kernel_proc.attach_proc_to_pid(tc: tc, pid: mypid, process: proc, external: false)
-                proc.execute()
+                proc.execute("main")
                 kernel_proc.pidOver(pid: proc.pid)
                 DispatchQueue.main.sync {
                     if let index = TerminalWindows.firstIndex(where: { $0 === window }) {
@@ -74,11 +74,23 @@ func js_fork(path: String, tc: [UInt8] = [], _ args: [String],  _ envp: [String:
                 let (input, deletion) = (window.input, window.deletion)
                 let proc = JavaScriptProcess(terminal: window, path: path, args: args, pid: mypid, envp: envp, queue: proc_queue)
                 kernel_proc.attach_proc_to_pid(tc: tc, pid: mypid, process: proc, external: true)
-                proc.execute()
+                proc.execute("main")
                 (window.input, window.deletion) = (input, deletion)
                 kernel_proc.pidOver(pid: proc.pid)
             }
         }
+    }
+}
+
+func js_thread(function: String, _ parent: UInt16) {
+    guard let proc_index: proc = kernel_proc.expose_process(ofpid: parent) else { return }
+    guard let process: JavaScriptProcess = proc_index.process else { return }
+    let thread_queue: DispatchQueue = DispatchQueue(label: "\(UUID())")
+    let pid: UInt16 = kernel_proc.nextPID(name: "\(proc_index.name):thread", parentpid: parent)
+    let thread: JavaScriptProcess = JavaScriptProcess(terminal: process.terminal, path: process.path, args: process.args, pid: pid, envp: process.envp, queue: thread_queue)
+    thread_queue.async {
+        thread.execute(function)
+        kernel_proc.pidOver(pid: pid)
     }
 }
 

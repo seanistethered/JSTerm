@@ -72,7 +72,16 @@ private func normalizePath(_ fullPath: String) -> String {
     return normalized
 }
 
-func loadfslib(process: JavaScriptProcess, thread: Int) {
+func loadfslib(process: JavaScriptProcess) {
+    let fs_validate: @convention(block) (String?) -> Bool = { rawpath in
+        let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
+        if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_RD) == 0, kernel_fs.isReadable(path: path) {
+            return FileManager.default.fileExists(atPath: path)
+        } else {
+            warnthekernel(process: process.pid, callname: "SYS_FS_RD")
+        }
+        return false
+    }
     let fs_list: @convention(block) (String?) -> [String] = { rawpath in
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_RD) == 0, kernel_fs.isReadable(path: path) {
@@ -214,19 +223,20 @@ func loadfslib(process: JavaScriptProcess, thread: Int) {
         return 0
     }
     
-    ld_add_symbol(symbol: fs_list, name: "fs_list", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_read, name: "fs_read", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_write, name: "fs_write", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_remove, name: "fs_remove", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_mkdir, name: "mkdir", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_rmdir, name: "rmdir", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_rmdir, name: "rm", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_touch, name: "touch", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_chdir, name: "chdir", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_validate, name: "fs_validate", process: process)
+    ld_add_symbol(symbol: fs_list, name: "fs_list", process: process)
+    ld_add_symbol(symbol: fs_read, name: "fs_read", process: process)
+    ld_add_symbol(symbol: fs_write, name: "fs_write", process: process)
+    ld_add_symbol(symbol: fs_remove, name: "fs_remove", process: process)
+    ld_add_symbol(symbol: fs_mkdir, name: "mkdir", process: process)
+    ld_add_symbol(symbol: fs_rmdir, name: "rmdir", process: process)
+    ld_add_symbol(symbol: fs_rmdir, name: "rm", process: process)
+    ld_add_symbol(symbol: fs_touch, name: "touch", process: process)
+    ld_add_symbol(symbol: fs_chdir, name: "chdir", process: process)
     
     // DEBUG!
-    ld_add_symbol(symbol: fs_chown, name: "chown", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_chgrp, name: "chgrp", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_getown, name: "getown", process: process, thread: thread)
-    ld_add_symbol(symbol: fs_getgrp, name: "getgrp", process: process, thread: thread)
+    ld_add_symbol(symbol: fs_chown, name: "chown", process: process)
+    ld_add_symbol(symbol: fs_chgrp, name: "chgrp", process: process)
+    ld_add_symbol(symbol: fs_getown, name: "getown", process: process)
+    ld_add_symbol(symbol: fs_getgrp, name: "getgrp", process: process)
 }

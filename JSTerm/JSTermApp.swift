@@ -43,12 +43,16 @@ func format() {
         do {
             try clearContentsOfFolder(atPath: "\(NSHomeDirectory())/Documents")
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs", withIntermediateDirectories: false)
+            try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/etc", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/bin", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/sbin", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/games", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/kernelfs", withIntermediateDirectories: false)
         } catch {}
         
+        let etcstack: [String] = [
+            "host.etc"
+        ]
         let sbinstack: [String] = [
             "shell.js",
             "mkdir.js",
@@ -67,13 +71,14 @@ func format() {
             "shutdown.js",
             "kill.js",
             "pamctl.js",
-            "serialctl.js"
+            "serialctl.js",
+            "mv.js"
         ]
         let gamesstack: [String] = [
             "2048.js",
             "snake.js"
         ]
-        let stack: [String] = FindFilesStack("\(Bundle.main.bundlePath)", ["js"], [])
+        let stack: [String] = FindFilesStack("\(Bundle.main.bundlePath)", ["js", "env"], [])
         for item in stack {
             if sbinstack.contains(item) {
                 copyf(sourcePath: "\(Bundle.main.bundlePath)/\(item)", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/sbin/\(item)")
@@ -84,6 +89,9 @@ func format() {
             }
         }
         
+        // etc build
+        copyf(sourcePath: "\(Bundle.main.bundlePath)/host.etc", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/etc/host")
+        
         // USR
         do {
             try saveusrfile([0:"root"], to: URL(fileURLWithPath: "\(JSTermKernel)/user"))
@@ -91,7 +99,7 @@ func format() {
             try savesyscallfile([0:[SYS_SETUID, SYS_SETGID, SYS_USRMGR, SYS_FS_WR, SYS_FS_RD, SYS_EXEC, SYS_SYSCTL]], to: URL(fileURLWithPath: "\(JSTermKernel)/syscall"))
         } catch {}
         
-        FileManager.default.createFile(atPath: "\(NSHomeDirectory())/Documents/rootfs/.installed_frida", contents: Data("4".utf8))
+        FileManager.default.createFile(atPath: "\(NSHomeDirectory())/Documents/rootfs/.installed_frida", contents: Data("5".utf8))
     }
 }
 

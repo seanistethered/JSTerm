@@ -109,25 +109,14 @@ class PIDManager {
     }
     
     func kill_proc(pid: UInt16) -> Void {
-        queue.sync {
-            DispatchQueue.main.sync {
+        //queue.sync {
+            //DispatchQueue.main.sync {
                 let proc = self.pids.first(where: { $0.pid == pid })
                 if let proc = proc {
-                    proc.process?.terminal.input("\n")
                     proc.process?.terminate()
-                    usleep(1000)
-                    proc.process?.terminal.input("\n")
-                    usleep(1000)
-                    proc.process?.terminal.input("\n")
-                    usleep(1000)
-                    proc.process?.terminal.input("\n")
-                    usleep(1000)
-                    proc.process?.terminal.input("\n")
-                    usleep(1000)
-                    proc.process?.terminal.input("\n")
                 }
-            }
-        }
+            //}
+        //}
     }
     
     func pidOver(pid: UInt16) -> Void {
@@ -245,6 +234,10 @@ class PIDManager {
     }
     
     // PRVT
+    func expose_process(ofpid: UInt16) -> proc? {
+        let proc = pids.first(where: { $0.pid == ofpid })
+        return proc
+    }
     func loadusr() {
         return queue.sync {
             do {

@@ -124,6 +124,14 @@ struct TileToolbar: View {
                             Image(systemName: "gear")
                         }
                     }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            format()
+                            exit(0)
+                        }) {
+                            Image(systemName: "trash")
+                        }
+                    }
                 }
             }
             .accentColor(.primary)

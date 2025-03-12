@@ -30,15 +30,27 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 import Foundation
 import JavaScriptCore
 
-func loadpamlib(process: JavaScriptProcess, thread: Int) {
+func loadpamlib(process: JavaScriptProcess) {
     let pam_setuid: @convention(block) (UInt16) -> UInt32 = { uid in
-        return kernel_proc.setuid(topid: process.pid, touid: uid)
+        if kernel_proc.hasperm(ofpid: process.pid, call: SYS_SETUID) == 0 {
+            return kernel_proc.setuid(topid: process.pid, touid: uid)
+        } else {
+            return SYSPERMERR
+        }
     }
     let pam_setgid: @convention(block) (UInt16) -> UInt32 = { uid in
-        return kernel_proc.setgid(topid: process.pid, togid: uid)
+        if kernel_proc.hasperm(ofpid: process.pid, call: SYS_SETGID) == 0 {
+            return kernel_proc.setgid(topid: process.pid, togid: uid)
+        } else {
+            return SYSPERMERR
+        }
     }
     let pam_setusername: @convention(block) (UInt16, String) -> UInt32 = { uid,name in
-        return kernel_proc.setusername(frompid: process.pid, touid: uid, name: name)
+        if kernel_proc.hasperm(ofpid: process.pid, call: SYS_USRMGR) == 0 {
+            return kernel_proc.setusername(frompid: process.pid, touid: uid, name: name)
+        } else {
+            return SYSPERMERR
+        }
     }
     
     let pam_setsyscall: @convention(block) (UInt16, UInt8) -> UInt32 = { uid,call in
@@ -55,10 +67,18 @@ func loadpamlib(process: JavaScriptProcess, thread: Int) {
             return SYSPERMERR
         }
     }
+    let pam_permcheck: @convention(block) (UInt8) -> Bool = { call in
+        if kernel_proc.hasperm(ofpid: process.pid, call: call) == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
     
-    ld_add_symbol(symbol: pam_setuid, name: "setuid", process: process, thread: thread)
-    ld_add_symbol(symbol: pam_setgid, name: "setgid", process: process, thread: thread)
-    ld_add_symbol(symbol: pam_setusername, name: "setusername", process: process, thread: thread)
-    ld_add_symbol(symbol: pam_setsyscall, name: "setsyscall", process: process, thread: thread)
-    ld_add_symbol(symbol: pam_unsetsyscall, name: "unsetsyscall", process: process, thread: thread)
+    ld_add_symbol(symbol: pam_setuid, name: "setuid", process: process)
+    ld_add_symbol(symbol: pam_setgid, name: "setgid", process: process)
+    ld_add_symbol(symbol: pam_setusername, name: "setusername", process: process)
+    ld_add_symbol(symbol: pam_setsyscall, name: "setsyscall", process: process)
+    ld_add_symbol(symbol: pam_unsetsyscall, name: "unsetsyscall", process: process)
+    ld_add_symbol(symbol: pam_permcheck, name: "permcheck", process: process)
 }

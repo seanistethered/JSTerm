@@ -30,8 +30,9 @@
 		AF1C2C5B2D1437E400EE0820 /* dmsg.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C5A2D1437DE00EE0820 /* dmsg.js */; };
 		AF1C2C5D2D14632400EE0820 /* chown.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C5C2D14631F00EE0820 /* chown.js */; };
 		AF5012992D0E7B72009CA6BB /* serialctl.js in Resources */ = {isa = PBXBuildFile; fileRef = AF5012982D0E7B6B009CA6BB /* serialctl.js */; };
+		AF75C7F72D7EFB0400B74821 /* host.etc in Resources */ = {isa = PBXBuildFile; fileRef = AF75C7F62D7EFAFC00B74821 /* host.etc */; };
+		AF75C7F92D804C3300B74821 /* mv.js in Resources */ = {isa = PBXBuildFile; fileRef = AF75C7F82D804C3000B74821 /* mv.js */; };
 		AFAD42F72D1D775F000358F4 /* chat.js in Resources */ = {isa = PBXBuildFile; fileRef = AFAD42F62D1D7752000358F4 /* chat.js */; };
-		AFAD42F92D1D8DC6000358F4 /* thread_poc.js in Resources */ = {isa = PBXBuildFile; fileRef = AFAD42F82D1D8DBE000358F4 /* thread_poc.js */; };
 		AFF5312C2D11B68D00C3E23C /* exploit.js in Resources */ = {isa = PBXBuildFile; fileRef = AFF5312B2D11B68800C3E23C /* exploit.js */; };
 		AFF531312D13441800C3E23C /* shutdown.js in Resources */ = {isa = PBXBuildFile; fileRef = AFF531302D13441200C3E23C /* shutdown.js */; };
 /* End PBXBuildFile section */
@@ -59,8 +60,9 @@
 		AF1C2C5A2D1437DE00EE0820 /* dmsg.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = dmsg.js; sourceTree = "<group>"; };
 		AF1C2C5C2D14631F00EE0820 /* chown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chown.js; sourceTree = "<group>"; };
 		AF5012982D0E7B6B009CA6BB /* serialctl.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = serialctl.js; sourceTree = "<group>"; };
+		AF75C7F62D7EFAFC00B74821 /* host.etc */ = {isa = PBXFileReference; lastKnownFileType = text; path = host.etc; sourceTree = "<group>"; };
+		AF75C7F82D804C3000B74821 /* mv.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mv.js; sourceTree = "<group>"; };
 		AFAD42F62D1D7752000358F4 /* chat.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chat.js; sourceTree = "<group>"; };
-		AFAD42F82D1D8DBE000358F4 /* thread_poc.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = thread_poc.js; sourceTree = "<group>"; };
 		AFF4BB922D0B33C40094B4AC /* JSTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF5312B2D11B68800C3E23C /* exploit.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = exploit.js; sourceTree = "<group>"; };
 		AFF531302D13441200C3E23C /* shutdown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = shutdown.js; sourceTree = "<group>"; };
@@ -89,7 +91,8 @@
 		AF05C7D62D0E02D200B3BC22 /* JSOS */ = {
 			isa = PBXGroup;
 			children = (
-				AFAD42F82D1D8DBE000358F4 /* thread_poc.js */,
+				AF75C7F82D804C3000B74821 /* mv.js */,
+				AF75C7F62D7EFAFC00B74821 /* host.etc */,
 				AFAD42F62D1D7752000358F4 /* chat.js */,
 				AF1C2C5C2D14631F00EE0820 /* chown.js */,
 				AF1C2C5A2D1437DE00EE0820 /* dmsg.js */,
@@ -205,7 +208,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFAD42F92D1D8DC6000358F4 /* thread_poc.js in Resources */,
+				AF75C7F92D804C3300B74821 /* mv.js in Resources */,
 				AF18CEC32D0F23A300F5A2E8 /* echo.js in Resources */,
 				AF05C7E12D0E03C800B3BC22 /* 2048.js in Resources */,
 				AF1C2C4C2D14115B00EE0820 /* whoami.js in Resources */,
@@ -213,6 +216,7 @@
 				AF18CEC12D0F223600F5A2E8 /* cat.js in Resources */,
 				AF05C7E32D0E03C800B3BC22 /* kill.js in Resources */,
 				AFAD42F72D1D775F000358F4 /* chat.js in Resources */,
+				AF75C7F72D7EFB0400B74821 /* host.etc in Resources */,
 				AF05C7FA2D0E42AD00B3BC22 /* hostname.js in Resources */,
 				AF05C7F42D0E39CF00B3BC22 /* env.js in Resources */,
 				AF05C7E52D0E03C800B3BC22 /* clear.js in Resources */,

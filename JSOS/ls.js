@@ -5,10 +5,30 @@
  Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
  */
 
+function safe_chdir(path)
+{
+    let start_pwd = getenv("pwd");
+    chdir(path);
+    let end_pwd = getenv("pwd");
+    
+    if(start_pwd == end_pwd)
+    {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 function main(args) {
     if (typeof args[1] !== 'undefined') {
-        chdir(args[1]);
+        let path = args[1];
+        if(safe_chdir(path) == 1)
+        {
+            print("error: no such path\n");
+            return 1;
+        }
     }
+    
     let dir = fs_list(getenv("pwd"));
     
     // Initialize arrays to store items, owners, and groups

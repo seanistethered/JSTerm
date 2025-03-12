@@ -31,9 +31,11 @@ import SwiftUI
 import UIKit
 import JavaScriptCore
 
-func loadseriallib(process: JavaScriptProcess, thread: Int) {
+func loadseriallib(process: JavaScriptProcess) {
     let jsinit_readline: @convention(block) (String) -> String = { prompt in
+        usleep(1);
         let semaphore = DispatchSemaphore(value: 0)
+        process.semaphore = semaphore
         var capture: String = ""
         DispatchQueue.main.async {
             process.terminal.terminalText.text.append(prompt)
@@ -58,12 +60,18 @@ func loadseriallib(process: JavaScriptProcess, thread: Int) {
             process.terminal.setInput { _ in }
             process.terminal.setDeletion { _ in }
         }
-        capture.removeLast()
+        
+        // BUG(fixed): dont drop last when interrupted because it could be that the user never inputted things
+        if !capture.isEmpty {
+            capture.removeLast()
+        }
         return capture
     }
     
     let getChar: @convention(block) () -> String = {
+        usleep(1);
         let semaphore = DispatchSemaphore(value: 0)
+        process.semaphore = semaphore
         var capturedCharacter: String = ""
         DispatchQueue.main.async {
             process.terminal.setInput { character in
@@ -78,11 +86,12 @@ func loadseriallib(process: JavaScriptProcess, thread: Int) {
             process.terminal.setInput { _ in }
             process.terminal.setDeletion { _ in }
         }
-
+        process.semaphore = nil
         return capturedCharacter
     }
     
     let serial_dup2: @convention(block) (Int) -> Void = { id in
+        usleep(1);
         DispatchQueue.main.async {
             process.terminal.setInput { out in
                 process.fd[id] = out
@@ -103,10 +112,12 @@ func loadseriallib(process: JavaScriptProcess, thread: Int) {
     }
     
     let jsinit_osprint: @convention(block) (String) -> Void = { message in
+        usleep(1);
         extern_deeplog(message)
     }
     
     let jsinit_print: @convention(block) (String) -> Void = { message in
+        usleep(1);
         DispatchQueue.main.async {
             process.terminal.terminalText.text.append(message)
         }
@@ -117,6 +128,7 @@ func loadseriallib(process: JavaScriptProcess, thread: Int) {
     }
     
     let serial_setBackground: @convention(block) (UInt8, UInt8, UInt8) -> Void = { r, g, b in
+        usleep(1);
         DispatchQueue.main.sync {
             let color = UIColor(
                 red: CGFloat(r) / 255.0,
@@ -130,6 +142,7 @@ func loadseriallib(process: JavaScriptProcess, thread: Int) {
     }
     
     let serial_setTextColor: @convention(block) (UInt8, UInt8, UInt8) -> Void = { r, g, b in
+        usleep(1);
         DispatchQueue.main.sync {
             let color = UIColor(
                 red: CGFloat(r) / 255.0,
@@ -142,36 +155,39 @@ func loadseriallib(process: JavaScriptProcess, thread: Int) {
     }
     
     let serial_cursorMove: @convention(block) (Int, Int) -> Void = { x, y in
+        usleep(1);
         DispatchQueue.main.async {
             process.terminal.terminalText.selectedRange = NSMakeRange(x, y)
         }
     }
     
     let serial_setTextSize: @convention(block) (UInt8) -> Void = { size in
+        usleep(1);
         DispatchQueue.main.async {
             process.terminal.terminalText.font = process.terminal.terminalText.font?.withSize(CGFloat(size))
         }
     }
     
     let serial_setTitle: @convention(block) (String) -> Void = { title in
+        usleep(1);
         DispatchQueue.main.async {
             process.terminal.name = title
             refresh()
         }
     }
     
-    ld_add_symbol(symbol: jsinit_osprint, name: "osprint", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_print, name: "print", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_readline, name: "readline", process: process, thread: thread)
-    ld_add_symbol(symbol: getChar, name: "getchar", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_clear, name: "clear", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_tokenizer, name: "tokenizer", process: process, thread: thread)
-    ld_add_symbol(symbol: serial_setBackground, name: "serial_setBackground", process: process, thread: thread)
-    ld_add_symbol(symbol: serial_setTextColor, name: "serial_setTextColor", process: process, thread: thread)
-    ld_add_symbol(symbol: serial_setTextSize, name: "serial_setTextSize", process: process, thread: thread)
-    ld_add_symbol(symbol: serial_setTitle, name: "serial_setTitle", process: process, thread: thread)
-    ld_add_symbol(symbol: serial_cursorMove, name: "serial_cursorMove", process: process, thread: thread)
-    ld_add_symbol(symbol: write, name: "write", process: process, thread: thread)
-    ld_add_symbol(symbol: read, name: "read", process: process, thread: thread)
-    ld_add_symbol(symbol: serial_dup2, name: "serial_dup2", process: process, thread: thread)
+    ld_add_symbol(symbol: jsinit_osprint, name: "osprint", process: process)
+    ld_add_symbol(symbol: jsinit_print, name: "print", process: process)
+    ld_add_symbol(symbol: jsinit_readline, name: "readline", process: process)
+    ld_add_symbol(symbol: getChar, name: "getchar", process: process)
+    ld_add_symbol(symbol: jsinit_clear, name: "clear", process: process)
+    ld_add_symbol(symbol: jsinit_tokenizer, name: "tokenizer", process: process)
+    ld_add_symbol(symbol: serial_setBackground, name: "serial_setBackground", process: process)
+    ld_add_symbol(symbol: serial_setTextColor, name: "serial_setTextColor", process: process)
+    ld_add_symbol(symbol: serial_setTextSize, name: "serial_setTextSize", process: process)
+    ld_add_symbol(symbol: serial_setTitle, name: "serial_setTitle", process: process)
+    ld_add_symbol(symbol: serial_cursorMove, name: "serial_cursorMove", process: process)
+    ld_add_symbol(symbol: write, name: "write", process: process)
+    ld_add_symbol(symbol: read, name: "read", process: process)
+    ld_add_symbol(symbol: serial_dup2, name: "serial_dup2", process: process)
 }

@@ -29,7 +29,7 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 
 import JavaScriptCore
 
-func loadproclib(process: JavaScriptProcess, thread: Int) {
+func loadproclib(process: JavaScriptProcess) {
     let jsinit_exec: @convention(block) (String,[String],Bool) -> Void = { rawpath,args,external in
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"] ?? "/")
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_EXEC) == 0 {
@@ -99,15 +99,15 @@ func loadproclib(process: JavaScriptProcess, thread: Int) {
         process.cthread(symbol: symbol)
     }
 
-    ld_add_symbol(symbol: jsinit_exec, name: "exec", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_kill, name: "kill", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_getallpid, name: "getallpid", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_getnamepid, name: "getnamepid", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_getuidpid, name: "getuidpid", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_getgidpid, name: "getgidpid", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_getpid, name: "getpid", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_getuid, name: "getuid", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_getgid, name: "getgid", process: process, thread: thread)
-    ld_add_symbol(symbol: proc_getusername, name: "getusername", process: process, thread: thread)
-    ld_add_symbol(symbol: jsinit_cthread, name: "cthread", process: process, thread: thread)
+    ld_add_symbol(symbol: jsinit_exec, name: "exec", process: process)
+    ld_add_symbol(symbol: jsinit_kill, name: "kill", process: process)
+    ld_add_symbol(symbol: jsinit_getallpid, name: "getallpid", process: process)
+    ld_add_symbol(symbol: jsinit_getnamepid, name: "getnamepid", process: process)
+    ld_add_symbol(symbol: jsinit_getuidpid, name: "getuidpid", process: process)
+    ld_add_symbol(symbol: jsinit_getgidpid, name: "getgidpid", process: process)
+    ld_add_symbol(symbol: jsinit_getpid, name: "getpid", process: process)
+    ld_add_symbol(symbol: jsinit_getuid, name: "getuid", process: process)
+    ld_add_symbol(symbol: jsinit_getgid, name: "getgid", process: process)
+    ld_add_symbol(symbol: proc_getusername, name: "getusername", process: process)
+    ld_add_symbol(symbol: jsinit_cthread, name: "cthread", process: process)
 }
