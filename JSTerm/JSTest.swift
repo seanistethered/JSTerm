@@ -108,6 +108,9 @@ struct TileToolbar: View {
                     NavigationLink(destination: FileList(title: "KernelFS",directoryPath: URL(fileURLWithPath: "\(NSHomeDirectory())/Documents/kernelfs"), actpath: $actpath, action: $actint)) {
                         Label("KernelFS", systemImage: "internaldrive.fill")
                     }
+                    NavigationLink(destination: FileList(title: "PermFS",directoryPath: URL(fileURLWithPath: "\(NSHomeDirectory())/Documents/permfs"), actpath: $actpath, action: $actint)) {
+                        Label("PermFS", systemImage: "internaldrive.fill")
+                    }
                     NavigationLink(destination: FileList(title: "RootFS",directoryPath: URL(fileURLWithPath: "\(NSHomeDirectory())/Documents/rootfs"), actpath: $actpath, action: $actint)) {
                         Label("RootFS", systemImage: "internaldrive.fill")
                     }
