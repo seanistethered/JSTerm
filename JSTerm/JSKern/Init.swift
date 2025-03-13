@@ -41,15 +41,29 @@ class JavaScriptInit {
         self.terminal = terminal
         self.context = JSContext()
         
+        let type: String = {
+            switch(JSTermKernelType)
+            {
+            case 0:
+                return "Release"
+            case 1:
+                return "Debug"
+            case 2:
+                return "Alpha"
+            case 3:
+                return "Beta"
+            default:
+                return "Unknown"
+            }
+        }()
+        
         DispatchQueue.main.async {
-            self.terminal.terminalText.text.append("Frida-JS-Kernel-v1.0\n")
+            self.terminal.terminalText.text.append("\(JSTermKernelName) \(JSTermKernelVersion) (\(type))\n")
         }
         
         beginClock()
         setupOSPrint()
         setupProc()
-        setupFS()
-        setupTC()
         setupHost()
         startUserspace()
     }
@@ -75,30 +89,6 @@ class JavaScriptInit {
         kernel_proc.loadsys()
         deeplog(msg: "pwd... okay")
         kernel_proc.loadpwd()
-    }
-    
-    private func setupFS() -> Void {
-        deeplog(msg: "[init] setting up kernel_fs")
-        kernel_fs.append(path: "/sbin/shell.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/su.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/ls.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/rmdir.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/uname.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/env.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/id.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/hostname.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/mkserial.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/whoami.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/mkdir.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/ps.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/chown.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/pamctl.js", perm: [0x00,0x00,0x01])
-        kernel_fs.append(path: "/sbin/serialctl.js", perm: [0x00,0x00,0x01])
-    }
-    
-    private func setupTC() -> Void {
-        deeplog(msg: "[init] setting up kernel_tc")
-        kernel_tc.addTC(path: "/sbin/shell.js", tc: [SYS_FS_RD,SYS_EXEC])
     }
     
     private func setupHost() -> Void {
@@ -248,9 +238,8 @@ class JavaScriptInit {
     }
     
     private func startUserspace() -> Void {
-        kernel_fs.kdone()
         deeplog(msg: "[init] starting userspace")
-        js_fork(path: "\(JSTermRoot)/sbin/shell.js", [], ["pwd":"/","bin":"/sbin:/bin:/games"], 0)
+        js_fork(semaphore: nil, path: "\(JSTermRoot)/sbin/shell.js", [], ["pwd":"/","bin":"/sbin:/bin:/games"], 0, 2)
     }
 }
 
