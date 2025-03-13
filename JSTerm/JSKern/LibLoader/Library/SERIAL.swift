@@ -118,7 +118,7 @@ func loadseriallib(process: JavaScriptProcess) {
     
     let jsinit_print: @convention(block) (String) -> Void = { message in
         usleep(1);
-        DispatchQueue.main.async {
+        DispatchQueue.main.sync {
             process.terminal.terminalText.text.append(message)
         }
     }
@@ -151,26 +151,27 @@ func loadseriallib(process: JavaScriptProcess) {
                 alpha: 1.0
             )
             process.terminal.terminalText.textColor = color
+            process.terminal.tintColor = color
         }
     }
     
     let serial_cursorMove: @convention(block) (Int, Int) -> Void = { x, y in
         usleep(1);
-        DispatchQueue.main.async {
+        DispatchQueue.main.sync {
             process.terminal.terminalText.selectedRange = NSMakeRange(x, y)
         }
     }
     
     let serial_setTextSize: @convention(block) (UInt8) -> Void = { size in
         usleep(1);
-        DispatchQueue.main.async {
+        DispatchQueue.main.sync {
             process.terminal.terminalText.font = process.terminal.terminalText.font?.withSize(CGFloat(size))
         }
     }
     
     let serial_setTitle: @convention(block) (String) -> Void = { title in
         usleep(1);
-        DispatchQueue.main.async {
+        DispatchQueue.main.sync {
             process.terminal.name = title
             refresh()
         }
