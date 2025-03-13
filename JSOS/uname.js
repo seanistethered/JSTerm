@@ -7,5 +7,5 @@
 
 function main(args)
 {
-    print(gethostname() + " Frida-JS-Kernel v0.1\n");
+    print(gethostname() + " | " + getkernelstring() + "\n");
 }

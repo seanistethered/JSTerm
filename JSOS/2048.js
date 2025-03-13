@@ -21,9 +21,10 @@ function genfld()
             var val = array[i + j];
             line += (val === 0 ? "." : val) + "\t\t";
         }
-        print(line + "\n\n\n");
+        printb(line + "\n\n\n");
     }
-    print("Score: " + score + "\n\n");
+    printb("Score: " + score + "\n\n");
+    outb();
 }
 
 function getEmptyCells()
@@ -189,8 +190,11 @@ function play()
 
         if (noMovesLeft())
         {
-            print("Game Over! Final Score: " + score + "\n");
-            print("Press any key to return to the menu...\n");
+            clear();
+            sleep(2);
+            printb("Game Over! Final Score: " + score + "\n");
+            printb("Press any key to return to the menu...\n");
+            outb();
             getchar();
             break;
         }
@@ -200,26 +204,28 @@ function play()
 function showCredits()
 {
     clear();
-    print("2048 JSOS Port\n");
-    print("Sean Boleslawski\n");
-    print("Press any key to return to the menu.\n");
+    printb("2048 JSOS Port\n");
+    printb("Sean Boleslawski\n");
+    printb("Press any key to return to the menu.\n");
+    outb();
     getchar();
 }
 
 function render()
 {
     clear();
-    print("Use W/S to select, Enter to choose.\n");
+    printb("Use W/S to select, Enter to choose.\n");
     for (var i = 0; i < menuitems.length; i++)
     {
         if (menu == i)
         {
-            print("> " + menuitems[i] + "\n");
+            printb("> " + menuitems[i] + "\n");
         } else
         {
-            print("  " + menuitems[i] + "\n");
+            printb("  " + menuitems[i] + "\n");
         }
     }
+    outb();
 }
 
 function trigger()

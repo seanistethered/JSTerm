@@ -7,5 +7,9 @@
 
 function main(args)
 {
-    rmdir(args[1]);
+    try {
+        rmdir(args[1]);
+    } catch (error) {
+        print(error.message + "\n");
+    }
 }

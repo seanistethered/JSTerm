@@ -28,11 +28,14 @@
 		AF1C2C4E2D14122B00EE0820 /* id.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C4D2D14122600EE0820 /* id.js */; };
 		AF1C2C592D1437DB00EE0820 /* dserver.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C582D1437D400EE0820 /* dserver.js */; };
 		AF1C2C5B2D1437E400EE0820 /* dmsg.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C5A2D1437DE00EE0820 /* dmsg.js */; };
-		AF1C2C5D2D14632400EE0820 /* chown.js in Resources */ = {isa = PBXBuildFile; fileRef = AF1C2C5C2D14631F00EE0820 /* chown.js */; };
 		AF5012992D0E7B72009CA6BB /* serialctl.js in Resources */ = {isa = PBXBuildFile; fileRef = AF5012982D0E7B6B009CA6BB /* serialctl.js */; };
 		AF75C7F72D7EFB0400B74821 /* host.etc in Resources */ = {isa = PBXBuildFile; fileRef = AF75C7F62D7EFAFC00B74821 /* host.etc */; };
 		AF75C7F92D804C3300B74821 /* mv.js in Resources */ = {isa = PBXBuildFile; fileRef = AF75C7F82D804C3000B74821 /* mv.js */; };
 		AFAD42F72D1D775F000358F4 /* chat.js in Resources */ = {isa = PBXBuildFile; fileRef = AFAD42F62D1D7752000358F4 /* chat.js */; };
+		AFB4FE092D822A4300B7B8F0 /* chown.js in Resources */ = {isa = PBXBuildFile; fileRef = AFB4FE082D822A3D00B7B8F0 /* chown.js */; };
+		AFB4FE0B2D822B5300B7B8F0 /* chgrp.js in Resources */ = {isa = PBXBuildFile; fileRef = AFB4FE0A2D822B4F00B7B8F0 /* chgrp.js */; };
+		AFB4FE0D2D822B6400B7B8F0 /* chmod.js in Resources */ = {isa = PBXBuildFile; fileRef = AFB4FE0C2D822B5F00B7B8F0 /* chmod.js */; };
+		AFB4FE0F2D822EB600B7B8F0 /* rm.js in Resources */ = {isa = PBXBuildFile; fileRef = AFB4FE0E2D822EB200B7B8F0 /* rm.js */; };
 		AFF5312C2D11B68D00C3E23C /* exploit.js in Resources */ = {isa = PBXBuildFile; fileRef = AFF5312B2D11B68800C3E23C /* exploit.js */; };
 		AFF531312D13441800C3E23C /* shutdown.js in Resources */ = {isa = PBXBuildFile; fileRef = AFF531302D13441200C3E23C /* shutdown.js */; };
 /* End PBXBuildFile section */
@@ -58,11 +61,14 @@
 		AF1C2C4D2D14122600EE0820 /* id.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = id.js; sourceTree = "<group>"; };
 		AF1C2C582D1437D400EE0820 /* dserver.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = dserver.js; sourceTree = "<group>"; };
 		AF1C2C5A2D1437DE00EE0820 /* dmsg.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = dmsg.js; sourceTree = "<group>"; };
-		AF1C2C5C2D14631F00EE0820 /* chown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chown.js; sourceTree = "<group>"; };
 		AF5012982D0E7B6B009CA6BB /* serialctl.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = serialctl.js; sourceTree = "<group>"; };
 		AF75C7F62D7EFAFC00B74821 /* host.etc */ = {isa = PBXFileReference; lastKnownFileType = text; path = host.etc; sourceTree = "<group>"; };
 		AF75C7F82D804C3000B74821 /* mv.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mv.js; sourceTree = "<group>"; };
 		AFAD42F62D1D7752000358F4 /* chat.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chat.js; sourceTree = "<group>"; };
+		AFB4FE082D822A3D00B7B8F0 /* chown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chown.js; sourceTree = "<group>"; };
+		AFB4FE0A2D822B4F00B7B8F0 /* chgrp.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chgrp.js; sourceTree = "<group>"; };
+		AFB4FE0C2D822B5F00B7B8F0 /* chmod.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = chmod.js; sourceTree = "<group>"; };
+		AFB4FE0E2D822EB200B7B8F0 /* rm.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = rm.js; sourceTree = "<group>"; };
 		AFF4BB922D0B33C40094B4AC /* JSTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF5312B2D11B68800C3E23C /* exploit.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = exploit.js; sourceTree = "<group>"; };
 		AFF531302D13441200C3E23C /* shutdown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = shutdown.js; sourceTree = "<group>"; };
@@ -91,10 +97,13 @@
 		AF05C7D62D0E02D200B3BC22 /* JSOS */ = {
 			isa = PBXGroup;
 			children = (
+				AFB4FE0E2D822EB200B7B8F0 /* rm.js */,
+				AFB4FE0C2D822B5F00B7B8F0 /* chmod.js */,
+				AFB4FE0A2D822B4F00B7B8F0 /* chgrp.js */,
+				AFB4FE082D822A3D00B7B8F0 /* chown.js */,
 				AF75C7F82D804C3000B74821 /* mv.js */,
 				AF75C7F62D7EFAFC00B74821 /* host.etc */,
 				AFAD42F62D1D7752000358F4 /* chat.js */,
-				AF1C2C5C2D14631F00EE0820 /* chown.js */,
 				AF1C2C5A2D1437DE00EE0820 /* dmsg.js */,
 				AF1C2C582D1437D400EE0820 /* dserver.js */,
 				AF1C2C4D2D14122600EE0820 /* id.js */,
@@ -218,8 +227,10 @@
 				AFAD42F72D1D775F000358F4 /* chat.js in Resources */,
 				AF75C7F72D7EFB0400B74821 /* host.etc in Resources */,
 				AF05C7FA2D0E42AD00B3BC22 /* hostname.js in Resources */,
+				AFB4FE0D2D822B6400B7B8F0 /* chmod.js in Resources */,
 				AF05C7F42D0E39CF00B3BC22 /* env.js in Resources */,
 				AF05C7E52D0E03C800B3BC22 /* clear.js in Resources */,
+				AFB4FE0F2D822EB600B7B8F0 /* rm.js in Resources */,
 				AF18CED32D0F3A5700F5A2E8 /* pamctl.js in Resources */,
 				AF1C2C4E2D14122B00EE0820 /* id.js in Resources */,
 				AF05C7E72D0E03C800B3BC22 /* ls.js in Resources */,
@@ -227,10 +238,11 @@
 				AF5012992D0E7B72009CA6BB /* serialctl.js in Resources */,
 				AF05C7E82D0E03C800B3BC22 /* shell.js in Resources */,
 				AF05C7F82D0E40EA00B3BC22 /* uname.js in Resources */,
+				AFB4FE0B2D822B5300B7B8F0 /* chgrp.js in Resources */,
 				AF18CECB2D0F2DB900F5A2E8 /* su.js in Resources */,
 				AFF531312D13441800C3E23C /* shutdown.js in Resources */,
 				AF05C7EA2D0E117B00B3BC22 /* mkserial.js in Resources */,
-				AF1C2C5D2D14632400EE0820 /* chown.js in Resources */,
+				AFB4FE092D822A4300B7B8F0 /* chown.js in Resources */,
 				AF05C7F22D0E300F00B3BC22 /* rmdir.js in Resources */,
 				AF1C2C5B2D1437E400EE0820 /* dmsg.js in Resources */,
 				AFF5312C2D11B68D00C3E23C /* exploit.js in Resources */,
@@ -395,6 +407,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JSOS",
+					"$(PROJECT_DIR)/JSTerm/JSKern/IO",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sinac.JSTerm;
@@ -432,6 +445,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JSOS",
+					"$(PROJECT_DIR)/JSTerm/JSKern/IO",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sinac.JSTerm;

@@ -22,9 +22,13 @@ function execute(binary, args)
         if (dir.includes(binary + ".js"))
         {
             let cbinary = cbin + "/" + binary + ".js";
-            exec(cbinary, args, false);
+            exec(cbinary, "main", args, 1);
             return;
         }
+    }
+    if(binary != "")
+    {
+        print(binary + ": no such command\n");
     }
 }
 
@@ -52,12 +56,6 @@ function tui(username)
                 break;
             default:
                 execute(input[0], input);
-                /*if (dir.includes(input[0] + ".js"))
-                {
-                    exec(bin + "/" + input[0] + ".js", input, false);
-                } else {
-                    print("Command not found\n")
-                }*/
         }
     }
 }

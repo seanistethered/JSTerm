@@ -6,7 +6,11 @@
  */
 
 function main(args)
-{
-    var content = fs_read(args[1]);
-    print(content + "\n");
+{    
+    try {
+        let content = fs_read(args[1]);
+        print(content + "\n");
+    } catch (error) {
+        print(error.message + "\n");
+    }
 }

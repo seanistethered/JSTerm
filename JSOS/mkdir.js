@@ -7,6 +7,9 @@
 
 function main(args)
 {
-    let num = Number(args[2]);
-    mkdir(args[1], num);
+    try {
+        mkdir(args[1]);
+    } catch (error) {
+        print(error.message + "\n");
+    }
 }

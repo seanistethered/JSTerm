@@ -38,18 +38,25 @@ func format() {
             }
         }
     }
-    if version != 5 {
+    if version != 6 {
         // FS
         do {
             try clearContentsOfFolder(atPath: "\(NSHomeDirectory())/Documents")
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs", withIntermediateDirectories: false)
-            try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/etc", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/bin", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/sbin", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/games", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/kernelfs", withIntermediateDirectories: false)
+            try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/permfs", withIntermediateDirectories: false)
         } catch {}
         
+        // PERMFS
+        kernel_fs.fs_set_perm(path: "/bin", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+        kernel_fs.fs_set_perm(path: "/sbin", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+        kernel_fs.fs_set_perm(path: "/games", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+        kernel_fs.fs_set_perm(path: "/.installed_frida", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+        
+        // stacking
         let etcstack: [String] = [
             "host.etc"
         ]
@@ -66,13 +73,15 @@ func format() {
             "whoami.js",
             "id.js",
             "ps.js",
-            "chown.js",
             "cat.js",
             "shutdown.js",
             "kill.js",
             "pamctl.js",
             "serialctl.js",
-            "mv.js"
+            "mv.js",
+            "chown.js",
+            "chgrp.js",
+            "chmod.js"
         ]
         let gamesstack: [String] = [
             "2048.js",
@@ -82,15 +91,15 @@ func format() {
         for item in stack {
             if sbinstack.contains(item) {
                 copyf(sourcePath: "\(Bundle.main.bundlePath)/\(item)", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/sbin/\(item)")
+                kernel_fs.fs_set_perm(path: "/sbin/\(item)", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
             } else if gamesstack.contains(item) {
                 copyf(sourcePath: "\(Bundle.main.bundlePath)/\(item)", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/games/\(item)")
+                kernel_fs.fs_set_perm(path: "/games/\(item)", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
             } else {
                 copyf(sourcePath: "\(Bundle.main.bundlePath)/\(item)", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/bin/\(item)")
+                kernel_fs.fs_set_perm(path: "/bin/\(item)", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
             }
         }
-        
-        // etc build
-        copyf(sourcePath: "\(Bundle.main.bundlePath)/host.etc", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/etc/host")
         
         // USR
         do {

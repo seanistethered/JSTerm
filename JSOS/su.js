@@ -15,7 +15,7 @@ function execute(binary, args)
         if (dir.includes(binary + ".js"))
         {
             let cbinary = cbin + "/" + binary + ".js";
-            exec(cbinary, args, false);
+            exec(cbinary, "main", args, 1);
             return;
         }
     }
