@@ -73,7 +73,7 @@ class JavaScriptProcess {
                 do {
                     let jsCode = try String(contentsOfFile: path, encoding: .utf8)
                     desc = jsCode
-                    kernel_proc_thread.run(pid, code: jsCode, ctx: context, jsargs: [args])
+                    kernel_proc_thread.run(pid, code: jsCode, symbol: function, ctx: context, jsargs: [args])
                 } catch {
                     extern_deeplog("Kernel Exec Error: \(error)");
                 }
@@ -83,6 +83,8 @@ class JavaScriptProcess {
     
     func terminate() {
         semaphore?.signal()
-        kernel_proc_thread.kill(pid)
+        semaphore = DispatchSemaphore(value: 0)
+        kernel_proc_thread.kill(pid, sema: semaphore)
+        semaphore?.wait()
     }
 }

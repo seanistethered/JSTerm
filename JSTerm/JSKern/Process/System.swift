@@ -84,16 +84,12 @@ class PIDManager {
         }
     }
     
-    func attach_proc_to_pid(tc: [UInt8], pid: UInt16, process: JavaScriptProcess, external: Bool) -> Void {
+    func attach_proc_to_pid(pid: UInt16, process: JavaScriptProcess, external: Bool) -> Void {
         queue.sync {
             let proc = pids.first(where: { $0.pid == pid })
             if let proc = proc {
                 proc.process = process
-                if tc.isEmpty {
-                    proc.syscalls = sys[proc.uid] ?? []
-                } else {
-                    proc.syscalls = tc
-                }
+                proc.syscalls = sys[proc.uid] ?? []
                 if !external {
                     proc.process?.terminal.name = {
                         let name = pids.first(where: { $0.pid == pid })?.name ?? ""
@@ -109,14 +105,12 @@ class PIDManager {
     }
     
     func kill_proc(pid: UInt16) -> Void {
-        //queue.sync {
-            //DispatchQueue.main.sync {
-                let proc = self.pids.first(where: { $0.pid == pid })
-                if let proc = proc {
-                    proc.process?.terminate()
-                }
-            //}
-        //}
+        queue.sync {
+            let proc = self.pids.first(where: { $0.pid == pid })
+            if let proc = proc {
+                proc.process?.terminate()
+            }
+        }
     }
     
     func pidOver(pid: UInt16) -> Void {

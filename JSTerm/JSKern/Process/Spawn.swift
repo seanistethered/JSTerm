@@ -52,45 +52,53 @@ func js_alloc_new_serial() -> TerminalWindow? {
     return window
 }
 
-func js_fork(path: String, tc: [UInt8] = [], _ args: [String],  _ envp: [String:String], _ parent: UInt16, _ window: TerminalWindow? = js_alloc_new_serial(), _ external: Bool = true) {
+func js_fork(semaphore: DispatchSemaphore?, path: String, _ args: [String],  _ envp: [String:String], _ parent: UInt16, _ mode: UInt8, _ symbol: String? = "main", _ window: TerminalWindow? = js_alloc_new_serial()) {
     let proc_queue: DispatchQueue = DispatchQueue(label: "\(UUID())")
     let mypid: UInt16 = kernel_proc.nextPID(name: path, parentpid: parent)
     if let window = window {
-        if external {
-            proc_queue.async {
-                let proc = JavaScriptProcess(terminal: window, path: path, args: args, pid: mypid, envp: envp, queue: proc_queue)
-                kernel_proc.attach_proc_to_pid(tc: tc, pid: mypid, process: proc, external: false)
-                proc.execute("main")
-                kernel_proc.pidOver(pid: proc.pid)
-                DispatchQueue.main.sync {
-                    if let index = TerminalWindows.firstIndex(where: { $0 === window }) {
-                        TerminalWindows.remove(at: index)
-                        refresh()
+        switch(mode)
+        {
+            case 1: // default
+                proc_queue.async {
+                    let (input, deletion) = (window.input, window.deletion)
+                    let proc = JavaScriptProcess(terminal: window, path: path, args: args, pid: mypid, envp: envp, queue: proc_queue)
+                    kernel_proc.attach_proc_to_pid(pid: mypid, process: proc, external: true)
+                    proc.execute(symbol ?? "main")
+                    (window.input, window.deletion) = (input, deletion)
+                    kernel_proc.pidOver(pid: proc.pid)
+                    semaphore?.signal()
+                }
+                break
+            case 2: // mkserial process
+                semaphore?.signal()
+                proc_queue.async {
+                    let proc = JavaScriptProcess(terminal: window, path: path, args: args, pid: mypid, envp: envp, queue: proc_queue)
+                    kernel_proc.attach_proc_to_pid(pid: mypid, process: proc, external: false)
+                    proc.execute(symbol ?? "main")
+                    kernel_proc.pidOver(pid: proc.pid)
+                    DispatchQueue.main.sync {
+                        if let index = TerminalWindows.firstIndex(where: { $0 === window }) {
+                            TerminalWindows[index].terminalText.text = ""
+                            TerminalWindows.remove(at: index)
+                            refresh()
+                        }
                     }
                 }
-            }
-        } else {
-            proc_queue.sync {
-                let (input, deletion) = (window.input, window.deletion)
-                let proc = JavaScriptProcess(terminal: window, path: path, args: args, pid: mypid, envp: envp, queue: proc_queue)
-                kernel_proc.attach_proc_to_pid(tc: tc, pid: mypid, process: proc, external: true)
-                proc.execute("main")
-                (window.input, window.deletion) = (input, deletion)
-                kernel_proc.pidOver(pid: proc.pid)
-            }
+                break
+            case 3: // background process
+                semaphore?.signal()
+                proc_queue.async {
+                    let (input, deletion) = (window.input, window.deletion)
+                    let proc = JavaScriptProcess(terminal: window, path: path, args: args, pid: mypid, envp: envp, queue: proc_queue)
+                    kernel_proc.attach_proc_to_pid(pid: mypid, process: proc, external: true)
+                    proc.execute(symbol ?? "main")
+                    (window.input, window.deletion) = (input, deletion)
+                    kernel_proc.pidOver(pid: proc.pid)
+                }
+                break
+            default:
+                break
         }
-    }
-}
-
-func js_thread(function: String, _ parent: UInt16) {
-    guard let proc_index: proc = kernel_proc.expose_process(ofpid: parent) else { return }
-    guard let process: JavaScriptProcess = proc_index.process else { return }
-    let thread_queue: DispatchQueue = DispatchQueue(label: "\(UUID())")
-    let pid: UInt16 = kernel_proc.nextPID(name: "\(proc_index.name):thread", parentpid: parent)
-    let thread: JavaScriptProcess = JavaScriptProcess(terminal: process.terminal, path: process.path, args: process.args, pid: pid, envp: process.envp, queue: thread_queue)
-    thread_queue.async {
-        thread.execute(function)
-        kernel_proc.pidOver(pid: pid)
     }
 }
 

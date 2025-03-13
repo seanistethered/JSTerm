@@ -30,21 +30,19 @@ Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 import JavaScriptCore
 
 func loadproclib(process: JavaScriptProcess) {
-    let jsinit_exec: @convention(block) (String,[String],Bool) -> Void = { rawpath,args,external in
+    let jsinit_exec: @convention(block) (String,String,[String],UInt8) -> Void = { rawpath,symbol,args,mode in
+        let semaphore = DispatchSemaphore(value: 0)
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"] ?? "/")
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_EXEC) == 0 {
-            var tc: [UInt8] = []
-            if kernel_tc.isTrusted(path: path) {
-                tc = kernel_tc.getTC(path: path)
-            }
-            if external {
-                js_fork(path: "\(JSTermRoot)\(path)", tc: tc, args, process.envp, process.pid)
+            if mode == 2 {
+                js_fork(semaphore: semaphore, path: "\(JSTermRoot)\(path)", args, process.envp, process.pid, mode, symbol)
             } else {
-                js_fork(path: "\(JSTermRoot)\(path)", tc: tc, args, process.envp, process.pid, process.terminal, false)
+                js_fork(semaphore: semaphore, path: "\(JSTermRoot)\(path)", args, process.envp, process.pid, mode, symbol, process.terminal)
             }
         } else {
             warnthekernel(process: process.pid, callname: "SYS_EXEC")
         }
+        semaphore.wait()
     }
     let jsinit_kill: @convention(block) (UInt16) -> Void = { selpid in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_SYSCTL) == 0 {
