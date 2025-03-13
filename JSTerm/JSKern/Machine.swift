@@ -31,7 +31,11 @@ import Foundation
 
 let JSTermRoot: String = "\(NSHomeDirectory())/Documents/rootfs"
 let JSTermKernel: String = "\(NSHomeDirectory())/Documents/kernelfs"
-var JSTermClock: Double = 0.0
+let JSTermPerm: String = "\(NSHomeDirectory())/Documents/permfs"
+var JSTermClock: Double = 0.0                                           // the clock of the machine
+let JSTermKernelVersion: String = "0.1"                                 // the version of the kerne
+let JSTermKernelName: String = "JSKern"                                 // the name of the kernek
+let JSTermKernelType: UInt8 = 1                                         // 0 = Release / 1 = Alpha / 2 = Beta
 
 func beginClock() -> Void {
     JSTermClock = Date().timeIntervalSince1970
