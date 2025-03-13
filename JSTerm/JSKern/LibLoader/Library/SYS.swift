@@ -70,6 +70,24 @@ func loadsyslib(process: JavaScriptProcess) {
     let sys_uuid: @convention(block) () -> String = {
         return "\(UUID())"
     }
+    let sys_getkernelstring: @convention(block) () -> String = {
+        let type: String = {
+            switch(JSTermKernelType)
+            {
+            case 0:
+                return "Release"
+            case 1:
+                return "Debug"
+            case 2:
+                return "Alpha"
+            case 3:
+                return "Beta"
+            default:
+                return "Unknown"
+            }
+        }()
+        return "\(JSTermKernelName) \(JSTermKernelVersion) (\(type))"
+    }
     
     ld_add_symbol(symbol: sys_clock, name: "clock", process: process)
     ld_add_symbol(symbol: sys_sleep, name: "sleep", process: process)
@@ -80,4 +98,24 @@ func loadsyslib(process: JavaScriptProcess) {
     ld_add_symbol(symbol: sys_hostname, name: "gethostname", process: process)
     ld_add_symbol(symbol: sys_shutdown, name: "shutdown", process: process)
     ld_add_symbol(symbol: sys_uuid, name: "uuid", process: process)
+    ld_add_symbol(symbol: sys_getkernelstring, name: "getkernelstring", process: process)
+    
+    /*
+     @Brief buffer printing functions to prevent flickering
+     */
+    process.context?.evaluateScript("""
+
+var buffer = "";
+
+function printb(string)
+{
+    buffer += string;
+}
+
+function outb()
+{
+    print(buffer);
+    buffer = "";
+}
+""")
 }
