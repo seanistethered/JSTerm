@@ -19,7 +19,6 @@
 		AF05C7F42D0E39CF00B3BC22 /* env.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7F32D0E39C800B3BC22 /* env.js */; };
 		AF05C7F82D0E40EA00B3BC22 /* uname.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7F72D0E40E600B3BC22 /* uname.js */; };
 		AF05C7FA2D0E42AD00B3BC22 /* hostname.js in Resources */ = {isa = PBXBuildFile; fileRef = AF05C7F92D0E42A900B3BC22 /* hostname.js */; };
-		AF1744952D1DC3B10035CE82 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = AF1744942D1DC3B10035CE82 /* Swifter */; };
 		AF18CEC12D0F223600F5A2E8 /* cat.js in Resources */ = {isa = PBXBuildFile; fileRef = AF18CEC02D0F223200F5A2E8 /* cat.js */; };
 		AF18CEC32D0F23A300F5A2E8 /* echo.js in Resources */ = {isa = PBXBuildFile; fileRef = AF18CEC22D0F239E00F5A2E8 /* echo.js */; };
 		AF18CECB2D0F2DB900F5A2E8 /* su.js in Resources */ = {isa = PBXBuildFile; fileRef = AF18CECA2D0F2DB400F5A2E8 /* su.js */; };
@@ -87,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF1744952D1DC3B10035CE82 /* Swifter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +166,6 @@
 			);
 			name = JSTerm;
 			packageProductDependencies = (
-				AF1744942D1DC3B10035CE82 /* Swifter */,
 			);
 			productName = JSTerm;
 			productReference = AFF4BB922D0B33C40094B4AC /* JSTerm.app */;
@@ -200,7 +197,6 @@
 			mainGroup = AFF4BB892D0B33C40094B4AC;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				AF1744932D1DC3B10035CE82 /* XCRemoteSwiftPackageReference "swifter" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AFF4BB932D0B33C40094B4AC /* Products */;
@@ -479,25 +475,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		AF1744932D1DC3B10035CE82 /* XCRemoteSwiftPackageReference "swifter" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/httpswift/swifter.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		AF1744942D1DC3B10035CE82 /* Swifter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AF1744932D1DC3B10035CE82 /* XCRemoteSwiftPackageReference "swifter" */;
-			productName = Swifter;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AFF4BB8A2D0B33C40094B4AC /* Project object */;
 }
