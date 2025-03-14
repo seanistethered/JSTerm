@@ -27,22 +27,13 @@ along with FridaCodeManager. If not, see <https://www.gnu.org/licenses/>.
 Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 */
 
-import SwiftUI
 import Foundation
 import JavaScriptCore
-
-func destroyJSContext(_ context: inout JSContext?) {
-    guard let ctx = context else { return }
-    ctx.exceptionHandler = nil
-    ctx.exception = nil
-}
-
 
 class JavaScriptProcess {
     private(set) var context: JSContext?
     private(set) var terminal: TerminalWindow
     private(set) var pid: UInt16
-    private(set) var queue: DispatchQueue
     private(set) var path: String
     private(set) var args: [String]
     private(set) var runs: Bool
@@ -56,7 +47,6 @@ class JavaScriptProcess {
         self.terminal = terminal
         context = JSContext()
         self.pid = pid
-        self.queue = queue
         self.path = path
         self.args = args
         self.envp = envp
