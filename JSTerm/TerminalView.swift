@@ -65,7 +65,6 @@ struct RootTerminalView: View, Identifiable, Hashable {
     init(rootView: TerminalWindow) {
         self.id = UUID()
         self.rootView = rootView
-        self.color = self.rootView.backcolor
     }
     
     var body: some View {
@@ -98,7 +97,6 @@ class TerminalWindow: UIView, UITextViewDelegate {
     var input: (String) -> Void = { _ in }
     var deletion: (String) -> Void = { _ in }
     var name: String = "Serial"
-    var backcolor: Color = Color.clear
     
     @State var refreshcolor: (Color) -> Void = { color in }
 
