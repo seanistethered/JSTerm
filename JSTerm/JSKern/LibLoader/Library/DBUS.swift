@@ -31,21 +31,21 @@ import JavaScriptCore
 
 func loaddbuslib(process: JavaScriptProcess) {
     let dbus_register: @convention(block) (String) -> Void = { id in
-        kernel_dbus.register(id: id)
+        kernel_dbus.register(id)
     }
     
     let dbus_unregister: @convention(block) (String) -> Void = { id in
-        kernel_dbus.unregister(id: id)
+        kernel_dbus.unregister(id)
     }
     
     let dbus_waitformsg: @convention(block) (String) -> String = { id in
         let semaphore = DispatchSemaphore(value: 0)
         process.semaphore = semaphore
-        return kernel_dbus.waitformsg(semaphore: semaphore, id: id)
+        return kernel_dbus.waitformsg(id, semaphore: semaphore)
     }
     
     let dbus_sendmsg: @convention(block) (String, String) -> Void = { id,payload in
-        kernel_dbus.sendmsg(id: id, payload: payload)
+        kernel_dbus.sendmsg(id, payload: payload)
     }
     
     ld_add_symbol(symbol: dbus_register, name: "dbus_register", process: process)

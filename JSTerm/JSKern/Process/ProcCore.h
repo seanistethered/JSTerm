@@ -26,8 +26,10 @@ typedef struct {
 @interface ProcCoreHelper : NSObject
 
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSValue *> *proc;
+
 - (void)assignThread:(uint16_t)pid thread:(pthread_t *)thread;
 - (pthread_t *)getThread:(uint16_t)pid;
 - (void)run:(uint16_t)pid code:(NSString*)code symbol:(NSString*)symbol ctx:(JSContext*)ctx jsargs:(NSArray*)jsargs;
 - (void)kill:(uint16_t)pid sema:(dispatch_semaphore_t)sema;
+
 @end
