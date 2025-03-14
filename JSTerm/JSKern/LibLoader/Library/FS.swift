@@ -86,24 +86,24 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_list: @convention(block) (String?) -> Any = { rawpath in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_RD) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath else {
-            return jsDoThrowError("Sufficient Arguments")
+            return jsDoThrowError(process.context, "Sufficient Arguments")
         }
         
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
         
         guard kernel_prot.canReadQuestion(pid: process.pid, path: path) else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         do {
             let directory: [String] = try FileManager.default.contentsOfDirectory(atPath: ssdlise_path(path: path, cwd: process.envp["pwd"]))
             return directory
         } catch {
-            return jsDoThrowError("Failed to get list of files")
+            return jsDoThrowError(process.context, "Failed to get list of files")
         }
     }
     
@@ -112,11 +112,11 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_read: @convention(block) (String?) -> Any = { rawpath in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_RD) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath else {
-            return jsDoThrowError("Sufficient Arguments")
+            return jsDoThrowError(process.context, "Sufficient Arguments")
         }
         
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
@@ -125,20 +125,20 @@ func loadfslib(process: JavaScriptProcess) {
         let fullPath = ssdlise_path(path: path, cwd: process.envp["pwd"])
         
         guard FileManager.default.fileExists(atPath: fullPath, isDirectory: &value) else {
-            return jsDoThrowError("File does not exist")
+            return jsDoThrowError(process.context, "File does not exist")
         }
         
         if value.boolValue {
-            return jsDoThrowError("File is a directory")
+            return jsDoThrowError(process.context, "File is a directory")
         }
         
         guard kernel_prot.canReadQuestion(pid: process.pid, path: path) else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let data = FileManager.default.contents(atPath: fullPath),
             let content = String(data: data, encoding: .utf8) else {
-            return jsDoThrowError("Failed to read file")
+            return jsDoThrowError(process.context, "Failed to read file")
         }
         
         return content
@@ -149,11 +149,11 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_write: @convention(block) (String?, String?) -> Any = { rawpath, content in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_WR) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath, let content = content else {
-            return jsDoThrowError("Insufficient Arguments")
+            return jsDoThrowError(process.context, "Insufficient Arguments")
         }
         
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
@@ -162,22 +162,22 @@ func loadfslib(process: JavaScriptProcess) {
         let fullPath = ssdlise_path(path: path, cwd: process.envp["pwd"])
         
         guard FileManager.default.fileExists(atPath: fullPath, isDirectory: &value) else {
-            return jsDoThrowError("File does not exist")
+            return jsDoThrowError(process.context, "File does not exist")
         }
         
         if value.boolValue {
-            return jsDoThrowError("File is a directory")
+            return jsDoThrowError(process.context, "File is a directory")
         }
         
         guard kernel_prot.canWriteQuestion(pid: process.pid, path: path) else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         let url = URL(fileURLWithPath: fullPath)
         do {
             try content.write(to: url, atomically: true, encoding: .utf8)
         } catch {
-            return jsDoThrowError("Failed to write to file")
+            return jsDoThrowError(process.context, "Failed to write to file")
         }
         
         return true
@@ -188,11 +188,11 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_remove: @convention(block) (String?) -> Any = { rawpath in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_WR) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath else {
-            return jsDoThrowError("Sufficient Arguments")
+            return jsDoThrowError(process.context, "Sufficient Arguments")
         }
         
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
@@ -201,15 +201,15 @@ func loadfslib(process: JavaScriptProcess) {
         let fullPath = ssdlise_path(path: path, cwd: process.envp["pwd"])
         
         guard FileManager.default.fileExists(atPath: fullPath, isDirectory: &value) else {
-            return jsDoThrowError("File does not exist")
+            return jsDoThrowError(process.context, "File does not exist")
         }
         
         if value.boolValue {
-            return jsDoThrowError("File is a directory")
+            return jsDoThrowError(process.context, "File is a directory")
         }
         
         guard kernel_prot.canWriteQuestion(pid: process.pid, path: path) else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         do {
@@ -217,7 +217,7 @@ func loadfslib(process: JavaScriptProcess) {
             _ = kernel_fs.fs_remove_perm(path: path)
             return true
         } catch {
-            return jsDoThrowError("Failed to remove file")
+            return jsDoThrowError(process.context, "Failed to remove file")
         }
     }
     
@@ -226,11 +226,11 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_mkdir: @convention(block) (String?) -> Any = { rawpath in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_WR) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath else {
-            return jsDoThrowError("Sufficient Arguments")
+            return jsDoThrowError(process.context, "Sufficient Arguments")
         }
         
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
@@ -244,11 +244,11 @@ func loadfslib(process: JavaScriptProcess) {
         let fullPath = ssdlise_path(path: path, cwd: process.envp["pwd"])
         
         guard !FileManager.default.fileExists(atPath: fullPath) else {
-            return jsDoThrowError("Directory already exists")
+            return jsDoThrowError(process.context, "Directory already exists")
         }
         
         guard kernel_prot.canWriteQuestion(pid: process.pid, path: parentdir) else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         do {
@@ -256,7 +256,7 @@ func loadfslib(process: JavaScriptProcess) {
             kernel_fs.fs_set_perm(path: path, perms: FilePermissions(owner: kernel_proc.piduid(ofpid: process.pid), group: kernel_proc.pidgid(ofpid: process.pid), owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
             return true
         } catch {
-            return jsDoThrowError("Failed to create directory")
+            return jsDoThrowError(process.context, "Failed to create directory")
         }
     }
     
@@ -265,11 +265,11 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_rmdir: @convention(block) (String?) -> Any = { rawpath in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_WR) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath else {
-            return jsDoThrowError("Sufficient Arguments")
+            return jsDoThrowError(process.context, "Sufficient Arguments")
         }
         
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
@@ -278,15 +278,15 @@ func loadfslib(process: JavaScriptProcess) {
         let fullPath = ssdlise_path(path: path, cwd: process.envp["pwd"])
         
         guard FileManager.default.fileExists(atPath: fullPath, isDirectory: &value) else {
-            return jsDoThrowError("Directory does not exist")
+            return jsDoThrowError(process.context, "Directory does not exist")
         }
         
         if !value.boolValue {
-            return jsDoThrowError("Directory is a file")
+            return jsDoThrowError(process.context, "Directory is a file")
         }
         
         guard kernel_prot.canWriteQuestion(pid: process.pid, path: path) else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         do {
@@ -294,7 +294,7 @@ func loadfslib(process: JavaScriptProcess) {
             _ = kernel_fs.fs_remove_perm(path: path)
             return true
         } catch {
-            return jsDoThrowError("Failed to remoce directory")
+            return jsDoThrowError(process.context, "Failed to remoce directory")
         }
     }
     
@@ -303,11 +303,11 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_move: @convention(block) (String?, String?) -> Any = { rawpath, destination in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_WR) != 0, kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_RD) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath, let destination = destination else {
-            return jsDoThrowError("Insufficient Arguments")
+            return jsDoThrowError(process.context, "Insufficient Arguments")
         }
         
         let sourcePath = chdir_path(path: rawpath, cwd: process.envp["pwd"])
@@ -327,15 +327,15 @@ func loadfslib(process: JavaScriptProcess) {
         }()
         
         guard FileManager.default.fileExists(atPath: fullSourcePath) else {
-            return jsDoThrowError("Source path does not exist")
+            return jsDoThrowError(process.context, "Source path does not exist")
         }
         
         guard FileManager.default.fileExists(atPath: parentdestdir) else {
-            return jsDoThrowError("Destination path doesnt exist")
+            return jsDoThrowError(process.context, "Destination path doesnt exist")
         }
         
         guard srcPerm.canRead, srcPerm.canWrite, destPerm.canWrite, kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_WR) == 0 else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         do {
@@ -343,7 +343,7 @@ func loadfslib(process: JavaScriptProcess) {
             _ = kernel_fs.fs_move_perm(path: sourcePath, to: destPath)
             return true
         } catch {
-            return jsDoThrowError("Failed to move file or directory")
+            return jsDoThrowError(process.context, "Failed to move file or directory")
         }
     }
 
@@ -353,11 +353,11 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_touch: @convention(block) (String?,String?) -> Any = { rawpath,content in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_WR) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath, let context = content else {
-            return jsDoThrowError("Insufficient Arguments")
+            return jsDoThrowError(process.context, "Insufficient Arguments")
         }
         
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
@@ -369,11 +369,11 @@ func loadfslib(process: JavaScriptProcess) {
         }()
         
         guard FileManager.default.fileExists(atPath: parentdir) else {
-            return jsDoThrowError("Destination path doesnt exist")
+            return jsDoThrowError(process.context, "Destination path doesnt exist")
         }
         
         guard kernel_prot.canWriteQuestion(pid: process.pid, path: parentdir) else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         return FileManager.default.createFile(atPath: ssdlise_path(path: path, cwd: process.envp["pwd"]), contents: Data((content ?? "").utf8))
@@ -450,11 +450,11 @@ func loadfslib(process: JavaScriptProcess) {
      */
     let fs_getperms: @convention(block) (String?) -> Any = { rawpath in
         if kernel_proc.hasperm(ofpid: process.pid, call: SYS_FS_RD) != 0 {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let rawpath = rawpath else {
-            return jsDoThrowError("Insufficient Arguments")
+            return jsDoThrowError(process.context, "Insufficient Arguments")
         }
         
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
@@ -467,15 +467,15 @@ func loadfslib(process: JavaScriptProcess) {
         }()
         
         guard FileManager.default.fileExists(atPath: ssdpath) else {
-            return jsDoThrowError("Path doesnt exist")
+            return jsDoThrowError(process.context, "Path doesnt exist")
         }
         
         guard kernel_prot.canReadQuestion(pid: process.pid, path: parentdir) else {
-            return jsDoThrowError("Permission denied")
+            return jsDoThrowError(process.context, "Permission denied")
         }
         
         guard let perms: FilePermissions = kernel_fs.fs_get_perm(path: path) else {
-            return jsDoThrowError("Failed to retrieve perms")
+            return jsDoThrowError(process.context, "Failed to retrieve perms")
         }
         
         let jsperm = JSValue(newObjectIn: process.context)!
