@@ -214,7 +214,7 @@ func loadfslib(process: JavaScriptProcess) {
         
         do {
             try FileManager.default.removeItem(atPath: fullPath)
-            _ = kernel_fs.fs_remove_perm(path: path)
+            _ = kernel_fs.fs_remove_perm(path)
             return true
         } catch {
             return jsDoThrowError(process.context, "Failed to remove file")
@@ -253,7 +253,7 @@ func loadfslib(process: JavaScriptProcess) {
         
         do {
             try FileManager.default.createDirectory(atPath: ssdlise_path(path: path, cwd: process.envp["pwd"]), withIntermediateDirectories: true, attributes: nil)
-            kernel_fs.fs_set_perm(path: path, perms: FilePermissions(owner: kernel_proc.piduid(ofpid: process.pid), group: kernel_proc.pidgid(ofpid: process.pid), owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+            kernel_fs.fs_set_perm(path, perms: FilePermissions(owner: kernel_proc.piduid(ofpid: process.pid), group: kernel_proc.pidgid(ofpid: process.pid), ownerRead: true, ownerWrite: true, ownerExecute: true, groupRead: true, groupWrite: false, groupExecute: true, otherRead: true, otherWrite: false, otherExecute: true))
             return true
         } catch {
             return jsDoThrowError(process.context, "Failed to create directory")
@@ -291,7 +291,7 @@ func loadfslib(process: JavaScriptProcess) {
         
         do {
             try FileManager.default.removeItem(atPath: fullPath)
-            _ = kernel_fs.fs_remove_perm(path: path)
+            _ = kernel_fs.fs_remove_perm(path)
             return true
         } catch {
             return jsDoThrowError(process.context, "Failed to remoce directory")
@@ -313,9 +313,13 @@ func loadfslib(process: JavaScriptProcess) {
         let sourcePath = chdir_path(path: rawpath, cwd: process.envp["pwd"])
         let destPath = chdir_path(path: destination, cwd: process.envp["pwd"])
         
-        let srcPerm = kernel_fs.fs_permcheck(path: sourcePath, uid: kernel_proc.piduid(ofpid: process.pid), gid: kernel_proc.pidgid(ofpid: process.pid))
+        guard let srcPerm = kernel_fs.fs_permcheck(sourcePath, uid: kernel_proc.piduid(ofpid: process.pid), gid: kernel_proc.pidgid(ofpid: process.pid)) else {
+            return jsDoThrowError(process.context, "Unable to get permissions")
+        }
         let destParent = URL(fileURLWithPath: destPath).deletingLastPathComponent().path
-        let destPerm = kernel_fs.fs_permcheck(path: destParent, uid: kernel_proc.piduid(ofpid: process.pid), gid: kernel_proc.pidgid(ofpid: process.pid))
+        guard let destPerm = kernel_fs.fs_permcheck(destParent, uid: kernel_proc.piduid(ofpid: process.pid), gid: kernel_proc.pidgid(ofpid: process.pid)) else {
+            return jsDoThrowError(process.context, "Unable to get permissions")
+        }
         
         let fullSourcePath = ssdlise_path(path: sourcePath, cwd: process.envp["pwd"])
         let fullDestPath = ssdlise_path(path: destPath, cwd: process.envp["pwd"])
@@ -340,7 +344,7 @@ func loadfslib(process: JavaScriptProcess) {
         
         do {
             try FileManager.default.moveItem(atPath: fullSourcePath, toPath: fullDestPath)
-            _ = kernel_fs.fs_move_perm(path: sourcePath, to: destPath)
+            _ = kernel_fs.fs_move_perm(sourcePath, destpath: destPath)
             return true
         } catch {
             return jsDoThrowError(process.context, "Failed to move file or directory")
@@ -396,10 +400,10 @@ func loadfslib(process: JavaScriptProcess) {
     let fs_chown: @convention(block) (UInt16, String) -> UInt32 = { user, rawpath in
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
         if kernel_prot.canWriteQuestion(pid: process.pid, path: path) {
-            if var perms: FilePermissions = kernel_fs.fs_get_perm(path: path)
+            if var perms: FilePermissions = kernel_fs.fs_get_perm(path)
             {
                 perms.owner = user
-                kernel_fs.fs_set_perm(path: path, perms: perms)
+                kernel_fs.fs_set_perm(path, perms: perms)
                 return 0
             }
         }
@@ -412,10 +416,10 @@ func loadfslib(process: JavaScriptProcess) {
     let fs_chgrp: @convention(block) (UInt16, String) -> UInt32 = { user, rawpath in
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
         if kernel_prot.canWriteQuestion(pid: process.pid, path: path) {
-            if var perms: FilePermissions = kernel_fs.fs_get_perm(path: path)
+            if var perms: FilePermissions = kernel_fs.fs_get_perm(path)
             {
                 perms.group = user
-                kernel_fs.fs_set_perm(path: path, perms: perms)
+                kernel_fs.fs_set_perm(path, perms: perms)
                 return 0
             }
         }
@@ -428,15 +432,15 @@ func loadfslib(process: JavaScriptProcess) {
     let fs_chmod: @convention(block) (UInt16, String) -> UInt32 = { octal, rawpath in
         let path = chdir_path(path: rawpath, cwd: process.envp["pwd"])
         if kernel_prot.canWriteQuestion(pid: process.pid, path: path) {
-            if var perms: FilePermissions = kernel_fs.fs_get_perm(path: path)
+            if var perms: FilePermissions = kernel_fs.fs_get_perm(path)
             {
                 let octalString = "\(octal)"
                 if let octalValue = UInt16(octalString, radix: 8) {
-                    if var nperms: FilePermissions = parseFilePermissions(from: octalValue)
+                    if var nperms: FilePermissions = parseFilePermissionsFromOctal(Int(octal))
                     {
                         nperms.owner = perms.owner
                         nperms.group = perms.group
-                        kernel_fs.fs_set_perm(path: path, perms: nperms)
+                        kernel_fs.fs_set_perm(path, perms: nperms)
                         return 0
                     }
                 }
@@ -474,7 +478,7 @@ func loadfslib(process: JavaScriptProcess) {
             return jsDoThrowError(process.context, "Permission denied")
         }
         
-        guard let perms: FilePermissions = kernel_fs.fs_get_perm(path: path) else {
+        guard let perms: FilePermissions = kernel_fs.fs_get_perm(path) else {
             return jsDoThrowError(process.context, "Failed to retrieve perms")
         }
         

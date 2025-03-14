@@ -21,7 +21,7 @@ class jskern_protection_class {
         let uid: UInt16 = kernel_proc.piduid(ofpid: pid)
         let gid: UInt16 = kernel_proc.pidgid(ofpid: pid)
         if kernel_proc.hasperm(ofpid: pid, call: SYS_FS_RD) == 0 {
-            let perm = kernel_fs.fs_treepermcheck(path: path, uid: uid, gid: gid)
+            guard let perm = kernel_fs.fs_treepermcheck(path, uid: uid, gid: gid) else { return false }
             if perm.canRead {
                 return true
             }
@@ -33,7 +33,7 @@ class jskern_protection_class {
         let uid: UInt16 = kernel_proc.piduid(ofpid: pid)
         let gid: UInt16 = kernel_proc.pidgid(ofpid: pid)
         if kernel_proc.hasperm(ofpid: pid, call: SYS_FS_WR) == 0 {
-            let perm = kernel_fs.fs_treepermcheck(path: path, uid: uid, gid: gid)
+            guard let perm = kernel_fs.fs_treepermcheck(path, uid: uid, gid: gid) else { return false }
             if perm.canWrite {
                 return true
             }
@@ -45,7 +45,7 @@ class jskern_protection_class {
         let uid: UInt16 = kernel_proc.piduid(ofpid: pid)
         let gid: UInt16 = kernel_proc.pidgid(ofpid: pid)
         if kernel_proc.hasperm(ofpid: pid, call: SYS_EXEC) == 0 {
-            let perm = kernel_fs.fs_treepermcheck(path: path, uid: uid, gid: gid)
+            guard let perm = kernel_fs.fs_treepermcheck(path, uid: uid, gid: gid) else { return false }
             if perm.canExecute {
                 return true
             }

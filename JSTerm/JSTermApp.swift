@@ -48,13 +48,14 @@ func format() {
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/rootfs/games", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/kernelfs", withIntermediateDirectories: false)
             try FileManager.default.createDirectory(atPath: "\(NSHomeDirectory())/Documents/permfs", withIntermediateDirectories: false)
+            FileManager.default.createFile(atPath: "\(NSHomeDirectory())/Documents/rootfs/.installed_frida", contents: Data("5".utf8))
         } catch {}
         
         // PERMFS
-        kernel_fs.fs_set_perm(path: "/bin", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
-        kernel_fs.fs_set_perm(path: "/sbin", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
-        kernel_fs.fs_set_perm(path: "/games", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
-        kernel_fs.fs_set_perm(path: "/.installed_frida", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+        kernel_fs.fs_set_perm("/bin", perms: FilePermissions(owner: 0, group: 0, ownerRead: true, ownerWrite: true, ownerExecute: true, groupRead: true, groupWrite: false, groupExecute: true, otherRead: true, otherWrite: false, otherExecute: true))
+        kernel_fs.fs_set_perm("/sbin", perms: FilePermissions(owner: 0, group: 0, ownerRead: true, ownerWrite: true, ownerExecute: true, groupRead: true, groupWrite: false, groupExecute: true, otherRead: true, otherWrite: false, otherExecute: true))
+        kernel_fs.fs_set_perm("/games", perms: FilePermissions(owner: 0, group: 0, ownerRead: true, ownerWrite: true, ownerExecute: true, groupRead: true, groupWrite: false, groupExecute: true, otherRead: true, otherWrite: false, otherExecute: true))
+        kernel_fs.fs_set_perm("/.installed_frida", perms: FilePermissions(owner: 0, group: 0, ownerRead: true, ownerWrite: true, ownerExecute: true, groupRead: true, groupWrite: false, groupExecute: true, otherRead: true, otherWrite: false, otherExecute: true))
         
         // stacking
         let etcstack: [String] = [
@@ -91,13 +92,13 @@ func format() {
         for item in stack {
             if sbinstack.contains(item) {
                 copyf(sourcePath: "\(Bundle.main.bundlePath)/\(item)", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/sbin/\(item)")
-                kernel_fs.fs_set_perm(path: "/sbin/\(item)", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+                kernel_fs.fs_set_perm("/sbin/\(item)", perms: FilePermissions(owner: 0, group: 0, ownerRead: true, ownerWrite: true, ownerExecute: true, groupRead: true, groupWrite: false, groupExecute: true, otherRead: true, otherWrite: false, otherExecute: true))
             } else if gamesstack.contains(item) {
                 copyf(sourcePath: "\(Bundle.main.bundlePath)/\(item)", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/games/\(item)")
-                kernel_fs.fs_set_perm(path: "/games/\(item)", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+                kernel_fs.fs_set_perm("/games/\(item)", perms: FilePermissions(owner: 0, group: 0, ownerRead: true, ownerWrite: true, ownerExecute: true, groupRead: true, groupWrite: false, groupExecute: true, otherRead: true, otherWrite: false, otherExecute: true))
             } else {
                 copyf(sourcePath: "\(Bundle.main.bundlePath)/\(item)", destinationPath: "\(NSHomeDirectory())/Documents/rootfs/bin/\(item)")
-                kernel_fs.fs_set_perm(path: "/bin/\(item)", perms: FilePermissions(owner: 0, group: 0, owner_read: true, owner_write: true, owner_execute: true, group_read: true, group_write: false, group_execute: true, other_read: true, other_write: false, other_execute: true))
+                kernel_fs.fs_set_perm("/bin/\(item)", perms: FilePermissions(owner: 0, group: 0, ownerRead: true, ownerWrite: true, ownerExecute: true, groupRead: true, groupWrite: false, groupExecute: true, otherRead: true, otherWrite: false, otherExecute: true))
             }
         }
         
@@ -107,8 +108,6 @@ func format() {
             try saveusrfile([0:"alpine"], to: URL(fileURLWithPath: "\(JSTermKernel)/passwd"))
             try savesyscallfile([0:[SYS_SETUID, SYS_SETGID, SYS_USRMGR, SYS_FS_WR, SYS_FS_RD, SYS_EXEC, SYS_SYSCTL]], to: URL(fileURLWithPath: "\(JSTermKernel)/syscall"))
         } catch {}
-        
-        FileManager.default.createFile(atPath: "\(NSHomeDirectory())/Documents/rootfs/.installed_frida", contents: Data("5".utf8))
     }
 }
 

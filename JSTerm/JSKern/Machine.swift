@@ -44,3 +44,19 @@ func beginClock() -> Void {
 func getClock() -> Double {
     return Date().timeIntervalSince1970 - JSTermClock
 }
+
+/*
+ @Brief Objc Translation for now
+ */
+@objc class JSTermMachine: NSObject {
+    @objc var ObjJSTermRoot: String = JSTermRoot
+    @objc var ObjJSTermKernel: String = JSTermKernel
+    @objc var ObjJSTermPerm: String = JSTermPerm
+    @objc var ObjJSTermKernelVersion: String = JSTermKernelVersion
+    @objc var ObjJSTermKernelName: String = JSTermKernelName
+    @objc var ObjJSTermKernelType: UInt8 = JSTermKernelType
+    
+    @objc func ObjJSGetClock() -> Double {
+        return getClock()
+    }
+}
