@@ -96,9 +96,8 @@ class TerminalWindow: UIView, UITextViewDelegate {
     var capturedInput: String = ""
     var input: (String) -> Void = { _ in }
     var deletion: (String) -> Void = { _ in }
+    var refreshcolor: (Color) -> Void = { color in }
     var name: String = "Serial"
-    
-    @State var refreshcolor: (Color) -> Void = { color in }
 
     func setInput(new: @escaping (String) -> Void) {
         input = new
