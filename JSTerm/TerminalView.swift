@@ -135,12 +135,12 @@ class TerminalWindow: UIView, UITextViewDelegate {
         terminalText.smartInsertDeleteType = .no
         terminalText.autocorrectionType = .no
         terminalText.autocapitalizationType = .none
-        terminalText.layoutManager.allowsNonContiguousLayout = true
+        //terminalText.layoutManager.allowsNonContiguousLayout = true
         terminalText.layer.shouldRasterize = true
         terminalText.layer.rasterizationScale = UIScreen.main.scale
         terminalText.isUserInteractionEnabled = true
-        terminalText.layoutManager.addTextContainer(terminalText.textContainer)
-        terminalText.layoutManager.ensureLayout(for: terminalText.textContainer)
+        //terminalText.layoutManager.addTextContainer(terminalText.textContainer)
+        //terminalText.layoutManager.ensureLayout(for: terminalText.textContainer)
         terminalText.isUserInteractionEnabled = false
         self.addSubview(terminalText)
     }
