@@ -6,9 +6,8 @@
 //
 
 #import "IO.h"
+#import "../Handoff.h"
 #import <JSTerm-Swift.h>
-
-JSTermMachine *machine = NULL;
 
 /*
  @Brief the actual interface of the IO class of JSKern
@@ -19,7 +18,7 @@ JSTermMachine *machine = NULL;
 {
     self = [super init];
     _thread = dispatch_queue_create("meow", DISPATCH_QUEUE_CONCURRENT);
-    machine = [[JSTermMachine alloc] init];
+    _machine = handoffMachine();
     return self;
 }
 
@@ -33,8 +32,8 @@ JSTermMachine *machine = NULL;
         }
 
         // Proceeding
-        NSString *fullPath = [NSString stringWithFormat:@"%@%@/perm", machine.ObjJSTermPerm, path];
-        NSString *fullRootPath = [NSString stringWithFormat:@"%@%@", machine.ObjJSTermRoot, path];
+        NSString *fullPath = [NSString stringWithFormat:@"%@%@/perm", _machine.JSTermPerm, path];
+        NSString *fullRootPath = [NSString stringWithFormat:@"%@%@", _machine.JSTermRoot, path];
 
         NSFileManager *manager = [NSFileManager defaultManager];
         
@@ -96,7 +95,7 @@ JSTermMachine *machine = NULL;
             return;
         }
         
-        NSString *fullPath = [NSString stringWithFormat:@"%@%@/perm", machine.ObjJSTermPerm, path];
+        NSString *fullPath = [NSString stringWithFormat:@"%@%@/perm", _machine.JSTermPerm, path];
         
         NSFileManager *manager = [NSFileManager defaultManager];
         if (![manager fileExistsAtPath:fullPath]) {
@@ -147,8 +146,8 @@ JSTermMachine *machine = NULL;
             return;
         }
         
-        NSString *fullsrcpath = [NSString stringWithFormat:@"%@%@/perm", machine.ObjJSTermPerm, srcpath];
-        NSString *fulldestpath = [NSString stringWithFormat:@"%@%@/perm", machine.ObjJSTermPerm, destpath];
+        NSString *fullsrcpath = [NSString stringWithFormat:@"%@%@/perm", _machine.JSTermPerm, srcpath];
+        NSString *fulldestpath = [NSString stringWithFormat:@"%@%@/perm", _machine.JSTermPerm, destpath];
         
         NSFileManager *manager = [NSFileManager defaultManager];
         if(![manager fileExistsAtPath:fullsrcpath])
@@ -196,7 +195,7 @@ JSTermMachine *machine = NULL;
             return;
         }
         
-        NSString *fullPath = [NSString stringWithFormat:@"%@%@", machine.ObjJSTermPerm, path];
+        NSString *fullPath = [NSString stringWithFormat:@"%@%@", _machine.JSTermPerm, path];
         
         NSFileManager *manager = [NSFileManager defaultManager];
         if(![manager fileExistsAtPath:fullPath])

@@ -10,10 +10,12 @@
 
 #import <Foundation/Foundation.h>
 #import "FilePermissions.h"
+#import "../Machine.h"
 
 @interface JSKERN_IO : NSObject
 
 @property (nonatomic, strong) dispatch_queue_t thread;
+@property (nonatomic, strong) Machine *machine;
 
 - (void)fs_set_perm:(NSString*)path perms:(FilePermissions*)Perms;
 - (FilePermissions*)fs_get_perm:(NSString*)path;

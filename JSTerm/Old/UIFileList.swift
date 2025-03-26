@@ -27,7 +27,7 @@ along with FridaCodeManager. If not, see <https://www.gnu.org/licenses/>.
 Founded by. Sean Boleslawski, Benjamin Hornbeck and Lucienne Salim in 2023
 */
 
-import SwiftUI
+/*import SwiftUI
 import Foundation
 import UniformTypeIdentifiers
 
@@ -823,3 +823,4 @@ func FindFilesStack(_ projectPath: String, _ fileExtensions: [String], _ ignore:
         return []
     }
 }
+*/

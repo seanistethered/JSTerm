@@ -73,9 +73,46 @@
 		AFF531302D13441200C3E23C /* shutdown.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = shutdown.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AF56C6832D8494B80027A3E5 /* Exceptions for "JSTerm" folder in "JSTerm" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				FluidGradient/BlobLayer.swift,
+				"FluidGradient/CGPoint+Extensions.swift",
+				FluidGradient/FluidGradient.swift,
+				FluidGradient/FluidGradientView.swift,
+				FluidGradient/ResizableLayer.swift,
+				JSKern/LibLoader/JSLibLoader.swift,
+				JSKern/LibLoader/Library/DBUS.swift,
+				JSKern/LibLoader/Library/FS.swift,
+				JSKern/LibLoader/Library/PAM.swift,
+				JSKern/LibLoader/Library/PROC.swift,
+				JSKern/LibLoader/Library/SERIAL.swift,
+				JSKern/LibLoader/Library/SYS.swift,
+				JSKern/Protection/Cache.swift,
+				JSKern/Protection/Protection.swift,
+				Old/JSTermApp.swift,
+				Old/JSTest.swift,
+				Old/NrangeKit.swift,
+				Old/TerminalView.swift,
+				Old/UICodeEditor.swift,
+				Old/UIFileList.swift,
+				Popup/BottomPopupView.swift,
+				Popup/Items/ButtonBar.swift,
+				Popup/Items/Header.swift,
+				Popup/Items/Picker.swift,
+				Popup/Items/TextField.swift,
+			);
+			target = AFF4BB912D0B33C40094B4AC /* JSTerm */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		AFF4BB942D0B33C40094B4AC /* JSTerm */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AF56C6832D8494B80027A3E5 /* Exceptions for "JSTerm" folder in "JSTerm" target */,
+			);
 			path = JSTerm;
 			sourceTree = "<group>";
 		};
